@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/css/styles.css">
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/c016e2c12b.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+    
+    <section class="header">
+        <div class="container">
+            <div class="perfil">
+                <i class="fa-solid fa-location-dot"></i>
+                <p>Pastelaria Ideal</p>
+            </div>
+            
+
+            <div class="carrinho" id="icone-carrinho">
+                <a href="carrinho/carrinho.html"><i class="fa-solid fa-cart-shopping"></i></a>
+                <span id="contador-itens" class="badge" style="display:none;">0</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="img-top-home">
+        <h2>Encontre O <strong>Melhor Pastel</strong> Perto De Você</h2>
+    </section>
+
+    <section class="search-button-home">
+        <div class="container">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="search" name="" placeholder="O que vai pedir hoje?">
+        </div>
+    </section>
+
+    <section class="categories">
+        <div class="container">
+            <h1>Categorias</h1>
+            <div class="categories-content">
+            <div class="box" data-category="pastel">
+                
+                <p>Pastéis</p>
+            </div>
+
+            <div class="box" data-category="bomba">
+                
+                <p>Bebidas</p>
+            </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção de conteúdo das categorias -->
+    <section id="content-section" class="products">
+        <div id="pastel-content" data-category="pastel" class="content-box">Carregando Pastéis...</div>
+        <div id="bomba-content" data-category="bomba" class="content-box hidden">Carregando Bombas...</div>
+        <div id="coxinha-content" data-category="coxinha" class="content-box hidden">Carregando Coxinhas...</div>
+    </section>
+
+
+
+
+    <script src="assets/js/script.js"></script>
+</body>
+</html>

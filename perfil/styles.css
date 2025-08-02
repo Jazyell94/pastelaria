@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    border: none;
+}
+
+html {
+    font-size: 62,5%;
+}
+body {
+    font-family: "Poppins", sans-serif;
+    background-color: #FFF5EE;
+}
+
+.header {
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+}
+.header i {
+    font-size: 1.5rem;
+    color: #4A2E2B;
+}
+.header h1 {
+    font-size: 1.4rem;
+    color: #4A2E2B;
+}
+
+
+.perfil-container {
+    padding: 1rem;
+}
+.perfil-container .img-perfil {
+    width: 10rem;
+    height: 10rem;
+    margin: 0 auto;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.perfil-container .img-perfil img {
+    width: 100%;
+    height: 100%;
+}
+.perfil-container h1 {
+    font-size: 1rem;
+    text-align: center;
+    margin-top: 10px;
+    color: #4A2E2B;
+}
+
+
+
+.perfil-endereco {
+    padding: .8rem 0;
+}
+
+.perfil-endereco .perfil-endereco-btn {
+
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.perfil-endereco .perfil-endereco-btn .btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.perfil-endereco .perfil-endereco-btn .btn i {
+    color: #4A2E2B;
+}
+.perfil-endereco .perfil-endereco-btn .btn a {
+    text-decoration: underline;
+    color: #4A2E2B;
+}
+
+
+.perfil-endereco-infos .heading {
+
+    margin-top: 2rem;
+}
+.perfil-endereco-infos .heading h1 {
+    font-size: 1.2rem;
+    color: #4A2E2B;
+    padding: 0 1rem;
+}
+
+.perfil-endereco-infos .form-dados .inputs {
+
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 1rem;
+}
+.perfil-endereco-infos .form-dados .inputs input {
+    height: 2.5rem;
+    font-size: 1rem;
+    padding-left: 6px;
+}
+.perfil-endereco-infos .form-dados .input-btn {
+    width: 12rem;
+    font-size: 1rem;
+    display: block;
+    background-color: #F3753A;
+}
+input[readonly] {
+  background-color: #f9f9f9;
+  color: #555;
+  border: 1px solid #ccc;
+}

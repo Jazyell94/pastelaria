@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/c016e2c12b.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+    <section class="header">
+        <a href="../index.html"><i class="fa-solid fa-chevron-left"></i></a>
+        <h1>Carrinho</h1>
+        <div></div>
+    </section>
+
+    <div class="products">
+        <div id="lista-carrinho" class="content-box"></div>
+    </div>
+
+
+
+
+    <!-- Etapa inicial: botão para iniciar checkout -->
+    <div id="checkout-inicial" class="checkout-inicial">
+
+        <div class="sub-total">
+            <p>Total:</p>
+            <p id="total-geral">R$ 0,00</p>
+        </div>
+
+        <div class="sub-total-entrega">
+            <p>Entrega:</p>
+            <p>R$ 0,00</p>
+        </div>
+
+        <div class="traco">
+            ---------------------------------------
+        </div>
+
+        <div class="button">
+            <button onclick="iniciarCheckout()" class="btn-finalizar">Finalizar Pedido</button>
+        </div>
+    </div>
+
+
+
+
+
+    <div id="checkout-container" class="checkout-container">
+
+        <!-- Etapa 1 - Nome e Telefone -->
+        <div id="etapa-1" class="etapa">
+            <div class="heading">
+                <button class="btn-close" onclick="fecharCheckout()"><i class="fa-solid fa-xmark"></i></button>
+                <h2>Dados do Cliente</h2>
+                <div></div>
+            </div>
+            <input id="checkout-nome" placeholder="Nome" />
+            <input id="checkout-telefone" placeholder="Telefone" />
+            <button onclick="avancarEtapa(2)" class="btn-avancar">Avançar</button>
+        </div>
+
+        <!-- Etapa 2 - Endereço -->
+        <div id="etapa-2" class="etapa">
+            <div class="heading">
+                <button class="btn-back" onclick="irParaEtapa(1)"><i class="fa-solid fa-chevron-left"></i></button>
+                <h2>Endereço</h2>
+                <div></div>
+            </div>
+            <input id="checkout-rua" placeholder="Rua" />
+            <input id="checkout-numero" placeholder="Número" />
+            <input id="checkout-bairro" placeholder="Bairro" />
+            <input id="checkout-ponto" placeholder="Ponto de Referência (opcional)" />
+            <button onclick="avancarEtapa(3)" class="btn-avancar">Avançar</button>
+        </div>
+
+        <!-- Etapa 3 - Pagamento -->
+        <div id="etapa-3" class="etapa">
+            <div class="heading">
+                <button class="btn-back" onclick="irParaEtapa(2)"><i class="fa-solid fa-chevron-left"></i></button>
+                <h2>Pagamento</h2>
+                <div></div>
+            </div>
+            <select id="checkout-pagamento" onchange="verificarTroco()">
+            <option value="">Selecione</option>
+            <option value="Dinheiro">Dinheiro</option>
+            <option value="Cartão">Cartão</option>
+            </select>
+
+            <div id="campo-troco" style="display:none; margin-top:10px;">
+            <input id="checkout-troco" placeholder="Valor para troco" />
+            </div>
+
+            <button onclick="finalizarPedido()" class="btn-finalizar">Finalizar Pedido</button>
+        </div>
+
+        </div>
+
+
+
+
+
+  <script src="script.js"></script>
+</body>
+</html>
