@@ -23,7 +23,9 @@
         <div id="lista-carrinho" class="content-box"></div>
     </div>
 
-
+    <div id="mensagem-carrinho-vazio" style="display: none; text-align: center; margin-top: 20px; font-size: 18px; z-index: 1000;">
+        🛒 Seu carrinho está vazio.
+    </div>
 
 
     <!-- Etapa inicial: botão para iniciar checkout -->
@@ -48,10 +50,6 @@
         </div>
     </div>
 
-
-
-
-
     <div id="checkout-container" class="checkout-container">
 
         <!-- Etapa 1 - Nome e Telefone -->
@@ -61,8 +59,8 @@
                 <h2>Dados do Cliente</h2>
                 <div></div>
             </div>
-            <input id="checkout-nome" placeholder="Nome" />
-            <input id="checkout-telefone" placeholder="Telefone" />
+            <input id="checkout-nome" placeholder="Nome"/>
+            <input id="checkout-telefone" placeholder="Telefone"/>
             <button onclick="avancarEtapa(2)" class="btn-avancar">Avançar</button>
         </div>
 
@@ -74,9 +72,9 @@
                 <div></div>
             </div>
             <input id="checkout-rua" placeholder="Rua" />
-            <input id="checkout-numero" placeholder="Número" />
+            <input id="checkout-numero" placeholder="Número" maxlength="5"/>
             <input id="checkout-bairro" placeholder="Bairro" />
-            <input id="checkout-ponto" placeholder="Ponto de Referência (opcional)" />
+            <input id="checkout-ponto" placeholder="Ponto de Referência" />
             <button onclick="avancarEtapa(3)" class="btn-avancar">Avançar</button>
         </div>
 
@@ -88,14 +86,16 @@
                 <div></div>
             </div>
             <select id="checkout-pagamento" onchange="verificarTroco()">
-            <option value="">Selecione</option>
-            <option value="Dinheiro">Dinheiro</option>
-            <option value="Cartão">Cartão</option>
+                <option value="Cartão">Cartão</option>
+                <option value="Dinheiro">Dinheiro</option>
+                <option value="Pix">Pix</option>
             </select>
 
-            <div id="campo-troco" style="display:none; margin-top:10px;">
-            <input id="checkout-troco" placeholder="Valor para troco" />
-            </div>
+            <div id="campo-cartao"></div>
+
+            <div id="campo-pix"></div>
+
+            <div id="campo-troco" style="display: none"></div>
 
             <button onclick="finalizarPedido()" class="btn-finalizar">Finalizar Pedido</button>
         </div>

@@ -243,10 +243,19 @@ body {
   border-radius: 10px;
   padding: 0.5rem;
   border: 1px solid #ccc;
+  color: #000;
+}
+.checkout-container .etapa input:focus,
+.checkout-container .etapa select:focus {
+  border: 1px solid #ccc;
+  outline: none;
 }
 
 .checkout-container .etapa .btn-avancar,
 .checkout-container .etapa .btn-finalizar {
+  position: absolute;
+  bottom: 5rem;
+  width: 100%;
   font-family: "Montserrat", sans-serif;
   padding: .5rem 1rem;
   height: 3rem;
@@ -256,24 +265,6 @@ body {
   color: #fff;
   background-color: #F3753A;
 }
-
-
-
-/* Botões de navegação 
-.btn-close,
-.btn-back {
-  position: absolute;
-  top: 0;
-  left: 0;
-  cursor: pointer;
-  font-size: 1.5rem;
-  background: none;
-  border: none;
-  color: #4A2E2B;
-  font-weight: bold;
-  margin-bottom: 1rem;
-  align-self: flex-start;
-} */
 
 
 @keyframes fadeIn {
@@ -288,3 +279,49 @@ body {
   }
 }
 
+.troco-container {
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: .9rem;
+}
+.troco-container .box-select {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+.troco-container .box-select input {
+  margin-top: 1rem;
+}
+#wrapper-troco-valor {
+  display: none;
+
+}
+#wrapper-troco-valor input {
+
+  margin-top: 1.2rem;
+}
+
+
+#campo-pix .pix-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+#campo-pix .pix-box label {
+  font-size: .9rem;
+  font-weight: bold;
+}
+
+#campo-pix small {
+  text-align: end;
+  padding-right: 5px;
+}
+
+#campo-pix .pix-input {
+  margin-top: 1.5rem;
+  text-align: center;
+  padding: 1rem;
+}

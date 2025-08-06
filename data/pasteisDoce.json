@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Bomba de Chocolate",
+    "price": "5,00",
+    "image": "assets/image/bomba.png",
+    "id": "bombaChocolate"
+  },
+  {
+    "name": "Bomba de Creme",
+    "price": "5,00",
+    "image": "assets/image/bomba.png",
+    "id": "bombaCreme"
+  }
+]

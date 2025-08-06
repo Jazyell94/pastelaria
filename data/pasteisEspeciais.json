@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Coxinha de Frango",
+    "price": "3,50",
+    "image": "assets/image/coxinha.png",
+    "id": "coxinhaFrango"
+  },
+  {
+    "name": "Coxinha de Carne",
+    "price": "4,00",
+    "image": "assets/image/coxinha.png",
+    "id": "coxinhaCarne"
+  }
+]

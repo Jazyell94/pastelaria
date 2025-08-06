@@ -30,7 +30,12 @@
     </section>
 
     <section class="img-top-home">
-        <h2>Encontre O <strong>Melhor Pastel</strong> Perto De Você</h2>
+        <div class="text-top-home">
+            <h2>Peça Agora O <strong>Melhor Pastel</strong> Da Cidade</h2>
+        </div>
+        <div class="img-top">
+            <img src="assets/images/pastel-home2.png" alt="">
+        </div>
     </section>
 
     <section class="search-button-home">
@@ -44,24 +49,40 @@
         <div class="container">
             <h1>Categorias</h1>
             <div class="categories-content">
-            <div class="box" data-category="pastel">
-                
-                <p>Pastéis</p>
-            </div>
+                <div class="box" data-category="pasteis">
+                    <p>Pastéis</p>
+                </div>
 
-            <div class="box" data-category="bomba">
-                
-                <p>Bebidas</p>
-            </div>
+                <div class="box" data-category="pasteisEspeciais">
+                    <p>Pastéis Especiais</p>
+                </div>
+
+                <div class="box" data-category="pasteisDoce">
+                    <p>Pastéis Doce</p>
+                </div>
+
+                <div class="box" data-category="bebidas">
+                    <p>Bebidas</p>
+                </div>
+
+                <div class="box" data-category="combos">
+                    <p>Combos</p>
+                </div>
             </div>
         </div>
     </section>
 
+    <section class="pesquisa-section">
+        <div id="resultado-pesquisa" class="products hidden" style="z-index: 1000;"></div>
+    </section>
+
     <!-- Seção de conteúdo das categorias -->
     <section id="content-section" class="products">
-        <div id="pastel-content" data-category="pastel" class="content-box">Carregando Pastéis...</div>
-        <div id="bomba-content" data-category="bomba" class="content-box hidden">Carregando Bombas...</div>
-        <div id="coxinha-content" data-category="coxinha" class="content-box hidden">Carregando Coxinhas...</div>
+        <div id="pasteis-content" class="content-box hidden"></div>
+        <div id="pasteisEspeciais-content" class="content-box hidden"></div>
+        <div id="pasteisDoce-content" class="content-box hidden"></div>
+        <div id="bebidas-content" class="content-box hidden"></div>
+        <div id="combos-content" class="content-box hidden"></div>        
     </section>
 
 
