@@ -1,14 +1,20 @@
 [
   {
-    "name": "Coxinha de Frango",
+    "name": "Nordestino",
     "price": "3,50",
     "image": "assets/image/coxinha.png",
-    "id": "coxinhaFrango"
+    "id": "pastelNordestino"
   },
   {
-    "name": "Coxinha de Carne",
+    "name": "Moda da casa",
     "price": "4,00",
     "image": "assets/image/coxinha.png",
-    "id": "coxinhaCarne"
+    "id": "pastelModaDaCasa"
+  },
+  {
+    "name": "Moda da casa",
+    "price": "4,00",
+    "image": "assets/image/coxinha.png",
+    "id": "pastelModaDaCasa"
   }
 ]

@@ -1,12 +1,12 @@
 [
   {
-    "name": "Bomba de Chocolate",
+    "name": "Coca-cola 1L",
     "price": "5,00",
     "image": "assets/image/bomba.png",
     "id": "bombaChocolate"
   },
   {
-    "name": "Bomba de Creme",
+    "name": "Guaraná lata",
     "price": "5,00",
     "image": "assets/image/bomba.png",
     "id": "bombaCreme"

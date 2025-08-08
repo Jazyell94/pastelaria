@@ -36,33 +36,65 @@
             <p id="total-geral">R$ 0,00</p>
         </div>
 
-        <div class="sub-total-entrega">
-            <p>Entrega:</p>
-            <p>R$ 0,00</p>
-        </div>
-
-        <div class="traco">
-            ---------------------------------------
-        </div>
-
         <div class="button">
-            <button onclick="iniciarCheckout()" class="btn-finalizar">Finalizar Pedido</button>
+            <button onclick="iniciarCheckout()" class="btn-finalizar">CONTINUAR</button>
         </div>
     </div>
 
     <div id="checkout-container" class="checkout-container">
 
-        <!-- Etapa 1 - Nome e Telefone -->
+        <!-- Etapa 1 - Escolha de entrega -->
         <div id="etapa-1" class="etapa">
             <div class="heading">
                 <button class="btn-close" onclick="fecharCheckout()"><i class="fa-solid fa-xmark"></i></button>
-                <h2>Dados do Cliente</h2>
+                <h2>Opções de Entrega</h2>
                 <div></div>
             </div>
-            <input id="checkout-nome" placeholder="Nome"/>
-            <input id="checkout-telefone" placeholder="Telefone"/>
-            <button onclick="avancarEtapa(2)" class="btn-avancar">Avançar</button>
+
+            <div class="content">
+                <!-- Opção 1: Entregar no meu endereço -->
+                <div class="opcao-box">
+                    <h3>Entregar no meu endereço</h3>
+                    <input id="nome-entrega" class="checkout-nome" placeholder="Nome" />
+                    <input id="telefone-entrega" class="checkout-telefone" placeholder="Telefone" />
+                    <button onclick="avancarEtapa(2)" class="btn-avancar">CONTINUAR</button>
+                </div>
+
+                <!-- Opção 2: Ir até o estabelecimento -->
+                <div class="opcao-box">
+                    <h3>Ir até o estabelecimento</h3>
+                    <div class="endereco-loja" onclick="mostrarEnderecoLoja()">
+                        <p>Rua dos Pastéis, 123<br>Bairro Centro – Cidade/UF</p>
+                    </div>
+                </div>
+            </div>
         </div>
+
+        <!-- Etapa 2 alternativa: Mostrar endereço da loja -->
+        <div id="etapa-endereco-loja" class="etapa hidden">
+            <div class="heading">
+                <button class="btn-back" onclick="irParaEtapa(1)"><i class="fa-solid fa-chevron-left"></i></button>
+                <h2>Retirada no Estabelecimento</h2>
+                <div></div>
+            </div>
+            <div class="content">
+                <div class="endereco-loja-2">
+                    <span>
+                        <i class="fa-solid fa-store"></i>
+                        <p>Pastel Da'Hora</p>
+                    </span>
+                    <p>Rua dos Pastéis, 123</p>
+                    <p>Bairro Centro – Cidade/UF</p>
+                    <p>Funcionamento: 18h às 23h</p>
+                </div>
+
+                <input id="nome-retirada" class="checkout-nome" placeholder="Nome" />
+                <input id="telefone-retirada" class="checkout-telefone" placeholder="Telefone" />
+
+                <button onclick="finalizarPedido()" class="btn-finalizar">FINALIZAR PEDIDO</button>
+            </div>
+        </div>
+
 
         <!-- Etapa 2 - Endereço -->
         <div id="etapa-2" class="etapa">
@@ -71,11 +103,13 @@
                 <h2>Endereço</h2>
                 <div></div>
             </div>
-            <input id="checkout-rua" placeholder="Rua" />
-            <input id="checkout-numero" placeholder="Número" maxlength="5"/>
-            <input id="checkout-bairro" placeholder="Bairro" />
-            <input id="checkout-ponto" placeholder="Ponto de Referência" />
-            <button onclick="avancarEtapa(3)" class="btn-avancar">Avançar</button>
+            <div class="content">
+                <input id="checkout-rua" placeholder="Nome da Rua" />
+                <input id="checkout-numero" placeholder="Nº da casa (Opcional)" maxlength="5"/>
+                <input id="checkout-bairro" placeholder="Bairro" />
+                <input id="checkout-ponto" placeholder="Ponto de Referência (Opcional)" />
+                <button onclick="avancarEtapa(3)" class="btn-avancar">CONTINUAR</button>
+            </div>
         </div>
 
         <!-- Etapa 3 - Pagamento -->
@@ -85,19 +119,19 @@
                 <h2>Pagamento</h2>
                 <div></div>
             </div>
-            <select id="checkout-pagamento" onchange="verificarTroco()">
-                <option value="Cartão">Cartão</option>
-                <option value="Dinheiro">Dinheiro</option>
-                <option value="Pix">Pix</option>
-            </select>
+            <div class="content">
+                <select id="checkout-pagamento" onchange="verificarTroco()">
+                    <option value="Cartão">Cartão</option>
+                    <option value="Dinheiro">Dinheiro</option>
+                    <option value="Pix">Pix</option>
+                </select>
 
-            <div id="campo-cartao"></div>
+                <div id="campo-cartao"></div>
+                <div id="campo-pix"></div>
+                <div id="campo-troco" style="display: none"></div>
 
-            <div id="campo-pix"></div>
-
-            <div id="campo-troco" style="display: none"></div>
-
-            <button onclick="finalizarPedido()" class="btn-finalizar">Finalizar Pedido</button>
+                <button onclick="finalizarPedido()" class="btn-finalizar">FINALIZAR PEDIDO</button>
+            </div>
         </div>
 
         </div>

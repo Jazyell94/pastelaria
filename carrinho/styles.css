@@ -20,21 +20,20 @@ body {
 }
 
 .header {
-
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 1rem;
+  border-bottom: 1px solid #ccc;
 }
 
 .header i {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   color: #000;
 }
 
 .header h1 {
-  font-size: 1.4rem;
-
+  font-size: 1.2rem;
 }
 
 
@@ -76,25 +75,12 @@ body {
   flex: 1;
   gap: 1rem;
 }
-
 .products .product-container .product-desc .product-name {
   text-align: left;
-  font-weight: 800;
+  font-weight: 600;
 }
-
 .products .product-container .product-desc .price {
   font-size: 0.9rem;
-}
-
-.products .product-container .remover {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  padding: .6rem .8rem;
-  border-radius: 5px 0 5px 0;
-  color: #fff;
-  background-color: #F3753A;
-  cursor: pointer;
 }
 
 .quantity-control {
@@ -105,7 +91,6 @@ body {
   align-items: center;
   gap: 0.2rem;
 }
-
 .quantity-control button {
   background-color: #F3753A;
   border: none;
@@ -116,25 +101,18 @@ body {
   border-radius: 5px;
   cursor: pointer;
   user-select: none;
-  line-height: 1;
-  font-weight: bold;
-}
 
+}
 .quantity-control .quantity {
   min-width: 24px;
   text-align: center;
-  font-weight: 700;
-
+  font-weight: 00;
   user-select: none;
 }
 
 
-
-
-
 .checkout-inicial {
-
-
+  border-top: 1px solid #ccc;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -142,8 +120,8 @@ body {
   background-color: #f6f6f6;
 }
 
-.checkout-inicial .sub-total,
-.sub-total-entrega {
+.checkout-inicial .sub-total {
+  margin-top: 1rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -151,10 +129,9 @@ body {
   border-bottom: 1.2px thick #000;
 }
 
-.checkout-inicial .sub-total p,
-.sub-total-entrega p {
-  font-family: "Montserrat", sans-serif;
-  font-weight: 600;
+.checkout-inicial .sub-total p {
+  font-weight: 700;
+  font-size: 1.2rem;
 }
 
 .checkout-inicial .traco {
@@ -177,7 +154,6 @@ body {
   padding: .6rem 0;
   width: 100%;
   font-size: 1rem;
-  font-weight: 600;
   color: #ffff;
   border-radius: 20px;
 }
@@ -196,11 +172,8 @@ body {
   height: 100vh;
   background: #f6f6f6;
   z-index: 9999;
-  /* fica acima de tudo */
   display: none;
-  /* fica escondido até ativar */
   overflow-y: auto;
-  padding: 1rem;
   flex-direction: column;
 }
 
@@ -209,7 +182,6 @@ body {
   display: none;
   width: 100%;
   height: 100vh;
-  /* ocupa a tela toda */
 }
 
 .checkout-container .etapa .heading {
@@ -217,16 +189,24 @@ body {
   align-items: center;
   justify-content: space-between;
   margin-bottom: 4rem;
+  padding: 1rem;
+  border-bottom: 1px solid #ccc;
 }
 .checkout-container .etapa .heading i {
-  font-size: 1.8rem;
+  font-size: 1.3rem;
   color: #000;
   background-color: #f6f6f6;
 }
 .checkout-container .etapa .heading h2 {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
 }
-
+.checkout-container .etapa .content {
+  padding: 1rem;
+}
+.checkout-container .etapa .content input,
+.checkout-container .etapa .content select {
+  width: 100%;
+}
 
 .checkout-container .etapa.ativa {
   display: flex;
@@ -240,7 +220,7 @@ body {
   height: 3rem;
   margin-bottom: 1rem;
   font-size: 1rem;
-  border-radius: 10px;
+  border-radius: 5px;
   padding: 0.5rem;
   border: 1px solid #ccc;
   color: #000;
@@ -253,15 +233,15 @@ body {
 
 .checkout-container .etapa .btn-avancar,
 .checkout-container .etapa .btn-finalizar {
-  position: absolute;
   bottom: 5rem;
   width: 100%;
   font-family: "Montserrat", sans-serif;
   padding: .5rem 1rem;
   height: 3rem;
-  border-radius: 10px;
-  font-size: 1rem;
+  border-radius: 5px;
+  font-size: .9rem;
   font-weight: 600;
+  letter-spacing: 2px;
   color: #fff;
   background-color: #F3753A;
 }
@@ -324,4 +304,55 @@ body {
   margin-top: 1.5rem;
   text-align: center;
   padding: 1rem;
+}
+
+
+
+
+.opcao-box {
+  margin-bottom: 4rem;
+
+}
+.opcao-box h3 {
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+}
+.opcao-box input {
+  width: 100%;
+}
+
+.endereco-loja {
+  background: #f9f9f9;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.endereco-loja:hover {
+  background: #eee;
+}
+
+.endereco-loja-2 {
+  border: 1px solid #ccc;
+  margin-bottom: 1rem;
+  padding: 1rem .5rem;
+}
+.endereco-loja-2 span {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.endereco-loja-2 span i {
+  font-size: 1.2rem;
+}
+.endereco-loja-2 span p {
+  margin-left: 8px;
+}
+.endereco-loja-2 p {
+  margin-left: 1rem;
+  margin-bottom: 3px;
+  font-size: .9rem;
 }

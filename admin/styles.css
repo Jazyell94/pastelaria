@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 * {
     margin: 0;
@@ -10,90 +11,69 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f8f9fa;
     min-height: 100vh;
-    overflow: hidden;
-    font-family: "Open Sans", sans-serif;
+
+        font-family: "Poppins", sans-serif;
 }
 
 header {
+    position: fixed;
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     width: 100%;
-    padding: 2rem;
+
     color: #fff;
-    background-color: #495057;
+    background-color: #797979;
 }
 header h1 {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
+    padding: 2rem;
+}
+header .orders-search-date {  
+    padding: .8rem;
+    width: 100%;
 }
 
-.no-orders-message {
-    text-align: center;
+header .orders-search-date .search {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+}
+
+header .orders-search-date input {
+    border: 1px solid #adadad;
+    padding: 4px;
+    color: #000;
+    border-radius: 5px;
+}
+header .orders-search-date button {
+    color: #000;
+    padding: 6px;
+    border: none;
+    border-radius: 5px;
 }
 
 .orders-section {
     margin: 0 auto;
     padding: 1rem;
+    padding-top: 12rem;
 }
-
-.orders-section .orders-search-date {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    background-color: #e6e6e6;
-    margin-bottom: 1rem;
-    padding: 1rem;
-}
-
-.orders-section .orders-search-date .search {
-    display: flex;
-    margin-top: 1rem;
-}
-
-.orders-section .orders-search-date input {
-    background: transparent;
-    border: 1px solid #adadad;
-    padding: 0 5px;
-    margin-right: 10px;
-}
-.orders-section .orders-search-date button {
-    padding: 7px 10px;
-    margin-right: 10px;
-    border: 1px solid #adadad;
-    border-radius: 5px;
-}
-
-.orders-section .orders-container {
-    border: 1px solid red;
-    background-color: #e6e6e6;
-    padding: 1rem 0.5rem 2rem 1rem;
-    height: 70vh;
-    overflow: auto;
-}
-
 .pedido-card {
-  border: 1px solid red;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.08);
-  padding: 20px;
-  margin-bottom: 20px;
-  font-family: 'Arial', sans-serif;
+    background: #ccc;
+    padding: 1rem;
+    margin-bottom: 2rem;
 }
-
 .pedido-header {
-        border: 1px solid red;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
 }
-
 .pedido-header h3 {
   margin: 0;
 }
-
 .btn-imprimir {
     background-color: #fff;
   padding: 6px 12px;
@@ -102,103 +82,33 @@ header h1 {
   cursor: pointer;
   font-size: 14px;
 }
-
+.pedido-info {
+    margin-top: 1rem;
+}
 .pedido-info p {
-  margin: 4px 0;
+  margin-top: .5rem;
 }
-
-.valor-total {
-  font-weight: bold;
-  color: #28a745;
+.pedido-endereco {
+    display: flex;
+    flex-direction: column;
 }
-
-.lista-produtos {
-  padding-left: 20px;
-  margin-top: 5px;
+.pedido-endereco span,
+.pedido-ponto span {
+    margin-left: 8px;
 }
-
+.pedido-produtos {
+    margin-top: .5rem;
+}
+.pedido-produtos ul {
+    list-style: none;
+    margin-left: 8px;
+}
 .lista-produtos li {
   margin-bottom: 4px;
 }
-
-
-/* STYLES PARA NOTIFICAÇÃO */
-#notification {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: #323232;
-    color: white;
-    padding: 15px;
-    border-radius: 5px;
-    font-size: 14px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    opacity: 0;
-    transition: opacity 0.5s ease, bottom 0.5s ease;
-}
-#notification.show {
-    opacity: 1;
-    bottom: 40px;
-}
-#notification.hidden {
-    opacity: 0;
-}
-
-
-/* STYLES PARA PÁGINA DE LOGIN */
-.login-section {
+.valor-total {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    height: 80vh;
-}
-.login-section .login-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #e6e6e6;
-    width: 30rem;
-}
-.login-section .login-container .title {
-
-    width: 100%;
-    padding: 1rem;
-    text-align: center;
-    font-size: 1.2rem;
-}
-.login-section .login-container .form {
-
-    width: 100%;
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-.login-section .login-container .form input {
-    border: 1px solid #adadad;
-    width: 100%;
-    margin-bottom: .5rem;
-    height: 2rem;
-    padding: 0 5px;
-}
-.login-section .login-container .form button {
-    padding: 7px 10px;
-    margin-right: 10px;
-    border: 1px solid #adadad;
-}
-
-/* STYLES PARA SCROLL */
-::-webkit-scrollbar {
-    width: 10px;
-}
-::-webkit-scrollbar-track {
-    background: #e6e6e6;
-}
-::-webkit-scrollbar-thumb {
-    background: #888; 
-    border-radius: 10px;
-}
-::-webkit-scrollbar-thumb:hover {
-    background: #555;
+    justify-content: space-between;
+    margin-top: 2rem;
 }

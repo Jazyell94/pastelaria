@@ -84,6 +84,17 @@ document.querySelectorAll('.box').forEach(box => {
   });
 });
 
+// Scroll suave para  categoria ir para o início do container
+document.querySelectorAll('.box').forEach(box => {
+  box.addEventListener('click', () => {
+    box.scrollIntoView({
+      behavior: 'smooth',
+      inline: 'start',
+      block: 'nearest',
+    });
+  });
+});
+
 // Carrega tudo quando a página for carregada
 window.addEventListener('DOMContentLoaded', carregarCategorias);
 
@@ -190,7 +201,7 @@ inputBusca.addEventListener('input', async () => {
   }
 
   if (resultados.length === 0) {
-    resultadoPesquisa.innerHTML = `<p style="text-align:center;">Nenhum produto encontrado.</p>`;
+    resultadoPesquisa.innerHTML = `<p style="text-align:center;">Nenhum produto encontrado</p>`;
     return;
   }
 
@@ -230,10 +241,12 @@ const input = document.querySelector('input[type="search"]');
 
 const frases = [
   'Pastel de frango',
-  'Bomba de carne',
-  'Coxinha de frango',
-  'Esfiha de carne',
+  'Beijinho',
+  'Pastel de carne',
+  'Nordestino',
+  'Guaraná lata',
   'Coca-cola 2L',
+  'Nutela',
 ];
 
 let fraseIndex = 0;

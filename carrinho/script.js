@@ -1,3 +1,5 @@
+let formaEntregaSelecionada = "Entrega";
+
 // === UTILITÁRIOS DO CARRINHO ===
 function getCarrinho() {
   return JSON.parse(localStorage.getItem("carrinho")) || [];
@@ -140,6 +142,18 @@ function fecharCheckout() {
   mostrarEtapa(1); // opcional: voltar para primeira etapa
 }
 
+
+function mostrarEnderecoLoja() {
+  document.querySelectorAll(".etapa").forEach(etapa => etapa.classList.remove("ativa"));
+  document.querySelectorAll(".etapa").forEach(etapa => etapa.classList.add("hidden"));
+  
+  const etapaLoja = document.getElementById("etapa-endereco-loja");
+  etapaLoja.classList.remove("hidden");
+  etapaLoja.classList.add("ativa");
+}
+
+
+
 // === AVANÇAR PARA PRÓXIMA ETAPA COM VALIDAÇÃO ===
 function avancarEtapa(numero) {
   const etapaAtual = document.querySelector(".etapa.ativa");
@@ -148,6 +162,13 @@ function avancarEtapa(numero) {
   let todosPreenchidos = true;
 
   campos.forEach(campo => {
+    const idCampo = campo.id || "";
+
+    // Permitir que o campo de número da casa esteja vazio
+    if (idCampo === "checkout-numero" || idCampo === "checkout-ponto") {
+      return; // ignora validação desses campos
+    }
+
     if (campo.type !== "checkbox" && campo.type !== "radio" && campo.value.trim() === "") {
       todosPreenchidos = false;
     }
@@ -188,29 +209,42 @@ function getDataHoraLocalMySQL() {
 }
 
 
+// Quando clicar no botão de retirada:
+document.getElementById("etapa-endereco-loja").addEventListener("click", () => {
+  formaEntregaSelecionada = "Retirada";
+});
+
+
+
 // === FUNÇÃO PRINCIPAL: FINALIZAR PEDIDO E ENVIAR AO BACK-END ===
 function finalizarPedido() {
-  const nome = document.getElementById("checkout-nome").value.trim();
-  const telefone = document.getElementById("checkout-telefone").value.trim();
-  const rua = document.getElementById("checkout-rua").value.trim();
-  const numero = document.getElementById("checkout-numero").value.trim();
-  const bairro = document.getElementById("checkout-bairro").value.trim();
-  const ponto = document.getElementById("checkout-ponto").value.trim();
-  const pagamento = document.getElementById("checkout-pagamento").value;
+
+  let nome = "";
+  let telefone = "";
+
+  if (formaEntregaSelecionada === "Retirada") {
+    nome = document.getElementById("nome-retirada")?.value.trim() || "";
+    telefone = document.getElementById("telefone-retirada")?.value.trim() || "";
+  } else if (formaEntregaSelecionada === "Entrega") {
+    nome = document.getElementById("nome-entrega")?.value.trim() || "";
+    telefone = document.getElementById("telefone-entrega")?.value.trim() || "";
+  }
+
+  // Endereço (válido apenas para entrega)
+  const rua = document.getElementById("checkout-rua")?.value.trim() || "";
+  const numero = document.getElementById("checkout-numero")?.value.trim() || "";
+  const bairro = document.getElementById("checkout-bairro")?.value.trim() || "";
+  const ponto = document.getElementById("checkout-ponto")?.value.trim() || "";
+
+  const pagamento = document.getElementById("checkout-pagamento")?.value || "";
 
   let pixPago = "nao";
-    if (pagamento === "Pix") {
-      pixPago = document.getElementById("pix-pago")?.checked ? "sim" : "nao";
-    }
+  if (pagamento === "Pix") {
+    pixPago = document.getElementById("pix-pago")?.checked ? "sim" : "nao";
+  }
 
   const carrinho = getCarrinho();
 
-  if (!nome || !telefone || !rua || !numero || !bairro || !pagamento) {
-    alert("Preencha todos os campos obrigatórios.");
-    return;
-  }
-
-  // Calcular troco apenas se pagamento for Dinheiro
   let troco = null;
   if (pagamento === "Dinheiro") {
     const precisaTroco = document.querySelector('input[name="precisaTroco"]:checked')?.value === "sim";
@@ -219,7 +253,7 @@ function finalizarPedido() {
       const recebido = parseValorReal(recebidoRaw);
       const total = getTotalCarrinho();
       if (!isNaN(recebido)) {
-        troco = recebido - total; // pode ser negativo se faltar dinheiro
+        troco = recebido - total;
       }
     } else {
       troco = 0;
@@ -233,9 +267,11 @@ function finalizarPedido() {
     troco,
     pixPago,
     produtos: carrinho,
+    forma_entrega: formaEntregaSelecionada,
     data: getDataHoraLocalMySQL(),
   };
 
+  console.log("dados", pedido);
   fetch("http://localhost:3000/api/pedidos", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -255,6 +291,15 @@ function finalizarPedido() {
       alert("Houve um erro ao enviar o pedido. Tente novamente.");
     });
 }
+
+
+
+
+
+
+
+
+
 
 // === MANIPULAÇÃO DO CAMPO DE TROCO ===
 
@@ -390,12 +435,12 @@ function verificarTroco() {
 
 // === MÁSCARA PARA TELEFONE NO CHECKOUT ===
 document.addEventListener("DOMContentLoaded", () => {
-  const checkoutTelefoneInput = document.getElementById("checkout-telefone");
+  const checkoutTelefoneInputs = document.querySelectorAll(".checkout-telefone");
 
-  if (checkoutTelefoneInput) {
-    checkoutTelefoneInput.addEventListener("input", () => {
+  checkoutTelefoneInputs.forEach(input => {
+    input.addEventListener("input", () => {
       // Remover tudo que não for dígito
-      let value = checkoutTelefoneInput.value.replace(/\D/g, "");
+      let value = input.value.replace(/\D/g, "");
       if (value.length > 11) value = value.slice(0, 11);
 
       // Aplicar máscara
@@ -409,16 +454,18 @@ document.addEventListener("DOMContentLoaded", () => {
         value = value.replace(/^(\d*)/, "($1");
       }
 
-      checkoutTelefoneInput.value = value;
+      input.value = value;
 
       // Validação visual simples (opcional)
       if (telefoneEhValido(value)) {
-        checkoutTelefoneInput.style.border = "1px solid green";
+        input.style.border = "1px solid green";
       } else {
-        checkoutTelefoneInput.style.border = "1px solid red";
+        input.style.border = "1px solid red";
       }
     });
-  }
+  });
+
+
 
   function telefoneEhValido(numeroFormatado) {
     const apenasNumeros = numeroFormatado.replace(/\D/g, "");

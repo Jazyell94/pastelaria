@@ -29,6 +29,7 @@ async function fetchOrdersByDate() {
   }
 }
 
+
 // =====================
 // EXIBIR PEDIDOS
 // =====================
@@ -45,58 +46,90 @@ function displayOrders(pedidos) {
 // ADICIONAR PEDIDO NA TELA
 // =====================
 function addOrder(pedido) {
-  const container = document.getElementById('orders-container');
-  const card = document.createElement('div');
-  card.className = 'order-card';
+  console.log(pedido);
+  const container = document.getElementById("orders-container");
+  const card = document.createElement("div");
+  card.className = "order-card";
 
   // Gera HTML dos produtos
-  const produtosHtml = pedido.itens.map(item =>
-    `<li>${item.quantidade}x ${item.nome} – R$ ${item.preco}</li>`
-  ).join("");
+  const produtosHtml = pedido.itens.map(item => `
+    <li>${item.quantidade}x ${item.nome} - R$ ${item.preco}</li>
+  `).join("");
 
-  // Calcula o total dos itens (caso venha null do banco)
+  // Calcula total
   const totalCalculado = pedido.itens.reduce((acc, item) => acc + item.preco * item.quantidade, 0);
 
-  // Divide o endereço em partes (caso esteja tudo em um campo só chamado "endereco")
-  const enderecoCompleto = pedido.endereco || '';
-  const [rua = '', numero = '', bairro = ''] = enderecoCompleto.split(',');
-
+  // Converte data
   const dataPedido = new Date(pedido.data);
-  const horaFormatada = dataPedido.toLocaleTimeString('pt-BR', {
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit'
+  const horaFormatada = dataPedido.toLocaleTimeString("pt-BR", {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
   });
 
+  // Modelo para entrega
+  if (pedido.entrega === "Entrega") {
+    card.innerHTML = `
+      <div class="pedido-card">
+        <div class="pedido-header">
+          <h3>Pedido #${pedido.id}</h3>
+          <p><strong>${pedido.entrega}</strong></p>
+          <p><strong>Hora:</strong> ${horaFormatada}</p>
+        </div>
+        <div class="pedido-info">
+          <p><strong>Nome:</strong> ${pedido.nome}</p>
+          <p><strong>Telefone:</strong> ${pedido.telefone}</p>
+          <div class="pedido-endereco">
+            <p><strong>Endereço:</strong></p>
+            <span>${pedido.rua?.trim() || ''}, ${pedido.numero?.trim() || ''} - ${pedido.bairro?.trim() || ''}</span>
+          </div>
+          <div class="pedido-ponto">
+            <p><strong>Ponto de referência:</strong></p>
+            <span>${pedido.ponto || ''}</span>
+          </div>
+          <div class="pedido-pagamento">
+            <p><strong>Pagamento:</strong> ${pedido.pagamento}</p>
+            <p><strong>Troco:</strong> R$ ${pedido.troco ?? '0,00'}</p>
+          </div>
+        </div>
+        <div class="pedido-produtos">
+          <p><strong>Produtos:</strong></p>
+          <ul>${produtosHtml}</ul>
+        </div>
 
-  card.innerHTML = `
-    <div class="pedido-card">
-      <div class="pedido-header">
-        <h3>Pedido #${pedido.id}</h3>
-        <p><strong>Hora:</strong> ${horaFormatada}</p>
-        <button class="btn-imprimir" onclick="imprimirPedido(${pedido.id})">🖨️</button>
+        <div class="valor-total">
+          <p><strong>Total:</strong> R$ ${totalCalculado.toFixed(2)}</p>
+        </div>
       </div>
-      <div class="pedido-info">
-        <p><strong>Cliente:</strong> ${pedido.nome}</p>
-        <p><strong>Endereço:</strong> ${pedido.rua?.trim() || '-'}, ${pedido.numero?.trim() || '-'} - ${pedido.bairro?.trim() || '-'}</p>
-        <p><strong>Ponto de referência:</strong> ${pedido.ponto}</p>
-        <p><strong>Pagamento:</strong> ${pedido.pagamento}</p>
-        <p><strong>Troco:</strong> R$ ${pedido.troco ?? '0,00'}</p>
-        <p><strong>Total:</strong> <span class="valor-total">R$ ${pedido.total ?? totalCalculado.toFixed(2)}</span></p>
-      </div>
-      <div class="pedido-produtos">
-        <h4>Itens:</h4>
-        <ul class="lista-produtos">
-          ${produtosHtml}
-        </ul>
-      </div>
-    </div>
-  `;
+    `;
+  } else {
+    // Modelo para retirada (mais simples)
+    card.innerHTML = `
+      <div class="pedido-card">
+        <div class="pedido-header">
+          <h3>Pedido #${pedido.id}</h3>
+          <p><strong>${pedido.entrega}</strong></p>
+          <p><strong>Hora:</strong> ${horaFormatada}</p>
+        </div>
+        <div class="pedido-info">
+          <p><strong>Nome:</strong> ${pedido.nome}</p>
+          <p><strong>Telefone:</strong> ${pedido.telefone}</p>
+        </div>
+        <div class="pedido-produtos">
+          <p><strong>Produtos:</strong></p>
+          <ul>${produtosHtml}</ul>
+        </div>
 
-
+        <div class="valor-total">
+          <p><strong>Total:</strong> R$ ${totalCalculado.toFixed(2)}</p>
+        </div>
+      </div>
+    `;
+  }
 
   container.appendChild(card);
 }
+
 
 
 // =====================
