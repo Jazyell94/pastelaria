@@ -1,4 +1,4 @@
-  const ws = new WebSocket("wss://jazye5785.c44.integrator.host");
+let socket; // conexão global do WebSocket
 let previousOrders = [];
 
 // =====================
@@ -10,32 +10,12 @@ document.addEventListener('DOMContentLoaded', () => {
   setupWebSocket();
 });
 
-
-  ws.onopen = () => {
-    console.log("Conectado ao servidor de pedidos em tempo real");
-  };
-
-  ws.onmessage = (event) => {
-    const pedido = JSON.parse(event.data);
-    console.log("Novo pedido recebido:", pedido);
-    
-    // Aqui você insere o pedido no HTML
-    const lista = document.getElementById("lista-pedidos");
-    const li = document.createElement("li");
-    li.innerHTML = `
-      <strong>${pedido.nome}</strong> - ${pedido.telefone}<br>
-      ${pedido.endereco} (${pedido.ponto})<br>
-      Total: R$ ${pedido.total} - Pagamento: ${pedido.pagamento}
-    `;
-    lista.prepend(li); // Adiciona no topo da lista
-  };
-
 // =====================
 // FETCH DE PEDIDOS POR DATA
 // =====================
 async function fetchOrdersByDate() {
   const date = document.getElementById('datePicker').value;
-  console.log("Data enviada:", date); // 👈 ver o que realmente está indo
+  console.log("Data enviada:", date);
 
   try {
     const response = await fetch(`https://jazye5785.c44.integrator.host/clientes?date=${encodeURIComponent(date)}`);
@@ -49,46 +29,34 @@ async function fetchOrdersByDate() {
   }
 }
 
-
-
 // =====================
 // EXIBIR PEDIDOS
 // =====================
 function displayOrders(pedidos) {
   const container = document.getElementById('orders-container');
   container.innerHTML = '';
-
-  pedidos.forEach(pedido => {
-    addOrder(pedido);
-  });
+  pedidos.forEach(pedido => addOrder(pedido));
 }
 
 // =====================
 // ADICIONAR PEDIDO NA TELA
 // =====================
 function addOrder(pedido) {
-  console.log(pedido);
   const container = document.getElementById("orders-container");
   const card = document.createElement("div");
   card.className = "order-card";
 
-  // Gera HTML dos produtos
   const produtosHtml = pedido.itens.map(item => `
     <li>${item.quantidade}x ${item.nome} - R$ ${item.preco}</li>
   `).join("");
 
-  // Calcula total
   const totalCalculado = pedido.itens.reduce((acc, item) => acc + item.preco * item.quantidade, 0);
 
-  // Converte data
   const dataPedido = new Date(pedido.data);
   const horaFormatada = dataPedido.toLocaleTimeString("pt-BR", {
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
+    hour: "2-digit", minute: "2-digit", second: "2-digit",
   });
 
-  // Modelo para entrega
   if (pedido.entrega === "Entrega") {
     card.innerHTML = `
       <div class="pedido-card">
@@ -117,14 +85,12 @@ function addOrder(pedido) {
           <p><strong>Produtos:</strong></p>
           <ul>${produtosHtml}</ul>
         </div>
-
         <div class="valor-total">
           <p><strong>Total:</strong> R$ ${totalCalculado.toFixed(2)}</p>
         </div>
       </div>
     `;
   } else {
-    // Modelo para retirada (mais simples)
     card.innerHTML = `
       <div class="pedido-card">
         <div class="pedido-header">
@@ -140,7 +106,6 @@ function addOrder(pedido) {
           <p><strong>Produtos:</strong></p>
           <ul>${produtosHtml}</ul>
         </div>
-
         <div class="valor-total">
           <p><strong>Total:</strong> R$ ${totalCalculado.toFixed(2)}</p>
         </div>
@@ -151,35 +116,36 @@ function addOrder(pedido) {
   container.appendChild(card);
 }
 
-
-
 // =====================
 // WEBSOCKET
 // =====================
 function setupWebSocket() {
+  socket = new WebSocket("wss://jazye5785.c44.integrator.host");
+
   socket.onopen = () => {
-    console.log('WebSocket conectado');
+    console.log('✅ WebSocket conectado');
   };
 
   socket.onmessage = event => {
     const pedido = JSON.parse(event.data);
-
-    const alreadyExists = previousOrders.some(p =>
-      p.id === pedido.id
-    );
+    const alreadyExists = previousOrders.some(p => p.id === pedido.id);
 
     if (!alreadyExists) {
       playNewOrderSound();
       showNotification('Novo pedido chegou!');
       showSystemNotification('Administração de Pedidos', 'Você tem um novo pedido!');
-
       previousOrders.unshift(pedido);
       addOrder(pedido);
     }
   };
 
   socket.onerror = error => {
-    console.error('WebSocket erro:', error);
+    console.error('❌ WebSocket erro:', error);
+  };
+
+  socket.onclose = () => {
+    console.warn('⚠️ WebSocket desconectado. Tentando reconectar em 5s...');
+    setTimeout(setupWebSocket, 5000);
   };
 }
 
@@ -217,7 +183,6 @@ function setInitialDate() {
   const datePicker = document.getElementById('datePicker');
   const savedDate = localStorage.getItem('selectedDate');
   const today = new Date();
-
   const defaultDate = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
   datePicker.value = savedDate || defaultDate;
 
@@ -232,11 +197,3 @@ function returnToTodayOrders() {
   document.getElementById('datePicker').value = today;
   fetchOrdersByDate(today);
 }
-
-
-
-
-
-
-
-
