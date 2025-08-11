@@ -1,4 +1,3 @@
-const API_BASE_URL = 'http://jazye5785.c44.integrator.host/';
 const socket = new WebSocket('ws://localhost:3000');
 let previousOrders = [];
 
@@ -18,7 +17,7 @@ async function fetchOrdersByDate() {
   const date = document.getElementById('datePicker').value;
 
   try {
-    const response = await fetch('http://jazye5785.c44.integrator.host/clientes?date=${date}');
+    const response = await fetch('https://jazye5785.c44.integrator.host/clientes?date=${date}');
     if (!response.ok) throw new Error(`Erro ao buscar pedidos: ${response.statusText}`);
 
     const pedidos = await response.json();
@@ -211,5 +210,6 @@ function returnToTodayOrders() {
   document.getElementById('datePicker').value = today;
   fetchOrdersByDate(today);
 }
+
 
 
