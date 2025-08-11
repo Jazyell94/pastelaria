@@ -10,6 +10,15 @@ document.addEventListener('DOMContentLoaded', () => {
   setupWebSocket();
 });
 
+
+// Receber pedidos em tempo real
+socket.on("novo-pedido", (pedido) => {
+    console.log("Novo pedido recebido:", pedido);
+    previousOrders.push(pedido);
+    displayOrders(previousOrders);
+});
+
+
 // =====================
 // FETCH DE PEDIDOS POR DATA
 // =====================
@@ -212,6 +221,7 @@ function returnToTodayOrders() {
   document.getElementById('datePicker').value = today;
   fetchOrdersByDate(today);
 }
+
 
 
 
