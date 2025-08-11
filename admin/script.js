@@ -15,9 +15,10 @@ document.addEventListener('DOMContentLoaded', () => {
 // =====================
 async function fetchOrdersByDate() {
   const date = document.getElementById('datePicker').value;
+  console.log("Data enviada:", date); // 👈 ver o que realmente está indo
 
   try {
-    const response = await fetch(`https://jazye5785.c44.integrator.host/clientes?date=${date}`);
+    const response = await fetch(`https://jazye5785.c44.integrator.host/clientes?date=${encodeURIComponent(date)}`);
     if (!response.ok) throw new Error(`Erro ao buscar pedidos: ${response.statusText}`);
 
     const pedidos = await response.json();
@@ -27,6 +28,7 @@ async function fetchOrdersByDate() {
     console.error("Erro ao buscar pedidos:", error);
   }
 }
+
 
 
 // =====================
@@ -210,6 +212,7 @@ function returnToTodayOrders() {
   document.getElementById('datePicker').value = today;
   fetchOrdersByDate(today);
 }
+
 
 
 
