@@ -1,4 +1,4 @@
-const socket = new WebSocket('ws://localhost:3000');
+const socket = io("https://jazye5785.c44.integrator.host");
 let previousOrders = [];
 
 // =====================
@@ -221,6 +221,7 @@ function returnToTodayOrders() {
   document.getElementById('datePicker').value = today;
   fetchOrdersByDate(today);
 }
+
 
 
 
