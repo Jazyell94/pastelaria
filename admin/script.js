@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:3000';
+const API_BASE_URL = 'http://jazye5785.c44.integrator.host/';
 const socket = new WebSocket('ws://localhost:3000');
 let previousOrders = [];
 
@@ -211,3 +211,4 @@ function returnToTodayOrders() {
   document.getElementById('datePicker').value = today;
   fetchOrdersByDate(today);
 }
+
