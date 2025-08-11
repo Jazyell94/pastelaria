@@ -269,6 +269,7 @@ function finalizarPedido() {
     produtos: carrinho,
     forma_entrega: formaEntregaSelecionada,
     data: getDataHoraLocalMySQL(),
+    total: total,
   };
 
   console.log("dados", pedido);
@@ -560,6 +561,7 @@ function mostrarOpcoesPix() {
 
 // === INICIALIZA EXIBIÇÃO DO CARRINHO AO ABRIR PÁGINA ===
 mostrarCarrinho();
+
 
 
 
