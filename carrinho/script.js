@@ -272,7 +272,7 @@ function finalizarPedido() {
   };
 
   console.log("dados", pedido);
-  fetch("http://localhost:3000/api/pedidos", {
+  fetch("http://jazye5785.c44.integrator.host:61570/api/pedidos", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(pedido),
@@ -560,3 +560,4 @@ function mostrarOpcoesPix() {
 
 // === INICIALIZA EXIBIÇÃO DO CARRINHO AO ABRIR PÁGINA ===
 mostrarCarrinho();
+
