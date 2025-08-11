@@ -1,4 +1,4 @@
-const socket = io("https://jazye5785.c44.integrator.host");
+  const ws = new WebSocket("wss://jazye5785.c44.integrator.host");
 let previousOrders = [];
 
 // =====================
@@ -11,13 +11,24 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// Receber pedidos em tempo real
-socket.on("novo-pedido", (pedido) => {
-    console.log("Novo pedido recebido:", pedido);
-    previousOrders.push(pedido);
-    displayOrders(previousOrders);
-});
+  ws.onopen = () => {
+    console.log("Conectado ao servidor de pedidos em tempo real");
+  };
 
+  ws.onmessage = (event) => {
+    const pedido = JSON.parse(event.data);
+    console.log("Novo pedido recebido:", pedido);
+    
+    // Aqui você insere o pedido no HTML
+    const lista = document.getElementById("lista-pedidos");
+    const li = document.createElement("li");
+    li.innerHTML = `
+      <strong>${pedido.nome}</strong> - ${pedido.telefone}<br>
+      ${pedido.endereco} (${pedido.ponto})<br>
+      Total: R$ ${pedido.total} - Pagamento: ${pedido.pagamento}
+    `;
+    lista.prepend(li); // Adiciona no topo da lista
+  };
 
 // =====================
 // FETCH DE PEDIDOS POR DATA
@@ -221,6 +232,7 @@ function returnToTodayOrders() {
   document.getElementById('datePicker').value = today;
   fetchOrdersByDate(today);
 }
+
 
 
 
