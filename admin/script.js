@@ -1,34 +1,38 @@
-let socket; // conexão global do WebSocket
 let previousOrders = [];
 
-// =====================
 // INICIALIZAÇÃO
-// =====================
 document.addEventListener('DOMContentLoaded', () => {
   setInitialDate();
   fetchOrdersByDate();
-  setupWebSocket();
+  startPolling();
 });
 
-// =====================
-// FETCH DE PEDIDOS POR DATA
-// =====================
+// FUNÇÃO PARA BUSCAR PEDIDOS POR DATA
 async function fetchOrdersByDate() {
   const date = document.getElementById('datePicker').value;
-  console.log("Data enviada:", date);
-
   try {
     const response = await fetch(`https://jazye5785.c44.integrator.host/clientes?date=${encodeURIComponent(date)}`);
     if (!response.ok) throw new Error(`Erro ao buscar pedidos: ${response.statusText}`);
-
     const pedidos = await response.json();
-    previousOrders = pedidos;
-    displayOrders(pedidos);
+
+    // Filtrar só os pedidos que ainda não temos
+    const novosPedidos = pedidos.filter(pedido => !previousOrders.some(p => p.id === pedido.id));
+    if (novosPedidos.length > 0) {
+      novosPedidos.forEach(pedido => addOrder(pedido));
+      previousOrders = [...novosPedidos, ...previousOrders]; // atualiza a lista global
+      playNewOrderSound();
+      showNotification('Novo(s) pedido(s) chegou(ram)!');
+      showSystemNotification('Administração de Pedidos', 'Você tem um novo pedido!');
+    }
   } catch (error) {
     console.error("Erro ao buscar pedidos:", error);
   }
 }
 
+// INICIA O POLLING (a cada 5 segundos)
+function startPolling() {
+  setInterval(fetchOrdersByDate, 5000);
+}
 // =====================
 // EXIBIR PEDIDOS
 // =====================
@@ -117,39 +121,6 @@ function addOrder(pedido) {
 }
 
 // =====================
-// WEBSOCKET
-// =====================
-function setupWebSocket() {
-  socket = new WebSocket("wss://jazye5785.c44.integrator.host");
-
-  socket.onopen = () => {
-    console.log('✅ WebSocket conectado');
-  };
-
-  socket.onmessage = event => {
-    const pedido = JSON.parse(event.data);
-    const alreadyExists = previousOrders.some(p => p.id === pedido.id);
-
-    if (!alreadyExists) {
-      playNewOrderSound();
-      showNotification('Novo pedido chegou!');
-      showSystemNotification('Administração de Pedidos', 'Você tem um novo pedido!');
-      previousOrders.unshift(pedido);
-      addOrder(pedido);
-    }
-  };
-
-  socket.onerror = error => {
-    console.error('❌ WebSocket erro:', error);
-  };
-
-  socket.onclose = () => {
-    console.warn('⚠️ WebSocket desconectado. Tentando reconectar em 5s...');
-    setTimeout(setupWebSocket, 5000);
-  };
-}
-
-// =====================
 // SOM E NOTIFICAÇÕES
 // =====================
 function playNewOrderSound() {
@@ -197,3 +168,4 @@ function returnToTodayOrders() {
   document.getElementById('datePicker').value = today;
   fetchOrdersByDate(today);
 }
+
