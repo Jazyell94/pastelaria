@@ -1,5 +1,6 @@
 let previousOrders = [];
 let ultimoPedidoId = null;
+let audioLiberado = false;
 
 // =====================
 // INICIALIZAÇÃO
@@ -8,6 +9,11 @@ document.addEventListener('DOMContentLoaded', () => {
   if (Notification.permission !== "granted" && Notification.permission !== "denied") {
     Notification.requestPermission();
   }
+
+  // Libera som após primeira interação
+  document.body.addEventListener("click", () => {
+    audioLiberado = true;
+  }, { once: true });
 
   setInitialDate();
   fetchOrdersByDate();
@@ -18,13 +24,13 @@ document.addEventListener('DOMContentLoaded', () => {
 // FETCH DE PEDIDOS POR DATA
 // =====================
 async function fetchOrdersByDate() {
-  let date = document.getElementById('datePicker').value;
+  let datePicker = document.getElementById('datePicker');
+  let date = datePicker?.value || "";
+
   if (!date) {
     date = getTodayDate();
-    document.getElementById('datePicker').value = date;
+    if (datePicker) datePicker.value = date;
   }
-
-  console.log("Data enviada:", date);
 
   try {
     const response = await fetch(`https://jazye5785.c44.integrator.host/clientes?date=${encodeURIComponent(date)}`);
@@ -33,15 +39,18 @@ async function fetchOrdersByDate() {
     const pedidos = await response.json();
 
     if (pedidos.length > 0) {
-      const pedidoMaisRecente = pedidos[0]; // supondo que já vem ordenado do mais novo
+      const pedidoMaisRecente = pedidos[0]; // supondo que vem do mais novo para o mais antigo
 
       if (pedidoMaisRecente.id !== ultimoPedidoId) {
         ultimoPedidoId = pedidoMaisRecente.id;
-        showSystemNotification(
-          `Novo Pedido #${pedidoMaisRecente.id}`,
-          `${pedidoMaisRecente.nome} - Total R$ ${pedidoMaisRecente.itens.reduce((acc, item) => acc + item.preco * item.quantidade, 0).toFixed(2)}`
-        );
-        playNewOrderSound();
+
+        if (previousOrders.length > 0) { 
+          showSystemNotification(
+            `Novo Pedido #${pedidoMaisRecente.id}`,
+            `${pedidoMaisRecente.nome} - Total R$ ${pedidoMaisRecente.itens.reduce((acc, item) => acc + item.preco * item.quantidade, 0).toFixed(2)}`
+          );
+          playNewOrderSound();
+        }
       }
     }
 
@@ -52,7 +61,9 @@ async function fetchOrdersByDate() {
   }
 }
 
+// =====================
 // INICIA O POLLING (a cada 5 segundos)
+// =====================
 function startPolling() {
   setInterval(fetchOrdersByDate, 5000);
 }
@@ -126,6 +137,7 @@ function addOrder(pedido) {
 // SOM E NOTIFICAÇÕES
 // =====================
 function playNewOrderSound() {
+  if (!audioLiberado) return; // No iPhone, só toca depois de interação
   const audio = new Audio('notificacao.mp3');
   audio.play().catch(() => {
     console.log("Som não pôde ser reproduzido sem interação do usuário");
@@ -153,13 +165,13 @@ function getTodayDate() {
 
 function setInitialDate() {
   const datePicker = document.getElementById('datePicker');
-  const today = getTodayDate();
-  datePicker.value = today;
-
-  datePicker.addEventListener('change', () => {
-    ultimoPedidoId = null; // reseta para pegar notificações da nova data
-    fetchOrdersByDate();
-  });
+  if (datePicker) {
+    datePicker.value = getTodayDate();
+    datePicker.addEventListener('change', () => {
+      ultimoPedidoId = null;
+      fetchOrdersByDate();
+    });
+  }
 }
 
 function returnToTodayOrders() {
