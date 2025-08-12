@@ -30,7 +30,6 @@ async function fetchOrdersByDate() {
     const novosPedidos = pedidos.filter(p => !previousOrders.some(old => old.id === p.id));
     if (novosPedidos.length > 0) {
       playNewOrderSound();
-      showNotification(`${novosPedidos.length} novo(s) pedido(s)!`);
       novosPedidos.forEach(p => {
         showSystemNotification("Novo pedido recebido", `Pedido #${p.id} de ${p.nome}`);
       });
@@ -177,6 +176,7 @@ function returnToTodayOrders() {
   document.getElementById('datePicker').value = today;
   fetchOrdersByDate(today);
 }
+
 
 
 
