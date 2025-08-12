@@ -164,7 +164,7 @@ function setInitialDate() {
   const datePicker = document.getElementById('datePicker');
   const savedDate = localStorage.getItem('selectedDate');
   const today = new Date();
-  const defaultDate = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
+  const defaultDate = today.toISOString().split('T')[0];
   datePicker.value = savedDate || defaultDate;
 
   datePicker.addEventListener('change', () => {
@@ -178,6 +178,7 @@ function returnToTodayOrders() {
   document.getElementById('datePicker').value = today;
   fetchOrdersByDate(today);
 }
+
 
 
 
