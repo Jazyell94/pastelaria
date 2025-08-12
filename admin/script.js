@@ -6,7 +6,6 @@ let previousOrders = [];
 document.addEventListener('DOMContentLoaded', () => {
   setInitialDate();
   fetchOrdersByDate();
-  setupWebSocket();
 });
 
 // =====================
@@ -163,4 +162,5 @@ function returnToTodayOrders() {
   document.getElementById('datePicker').value = today;
   fetchOrdersByDate(today);
 }
+
 
