@@ -4,10 +4,14 @@ let previousOrders = [];
 // INICIALIZAÇÃO
 // =====================
 document.addEventListener('DOMContentLoaded', () => {
+  if (Notification.permission !== "granted" && Notification.permission !== "denied") {
+    Notification.requestPermission();
+  }
   setInitialDate();
   fetchOrdersByDate();
   startPolling();
 });
+
 
 // =====================
 // FETCH DE PEDIDOS POR DATA
@@ -21,6 +25,17 @@ async function fetchOrdersByDate() {
     if (!response.ok) throw new Error(`Erro ao buscar pedidos: ${response.statusText}`);
 
     const pedidos = await response.json();
+
+    // Comparar se há pedidos novos
+    const novosPedidos = pedidos.filter(p => !previousOrders.some(old => old.id === p.id));
+    if (novosPedidos.length > 0) {
+      playNewOrderSound();
+      showNotification(`${novosPedidos.length} novo(s) pedido(s)!`);
+      novosPedidos.forEach(p => {
+        showSystemNotification("Novo pedido recebido", `Pedido #${p.id} de ${p.nome}`);
+      });
+    }
+
     previousOrders = pedidos;
     displayOrders(pedidos);
   } catch (error) {
@@ -169,6 +184,7 @@ function returnToTodayOrders() {
   document.getElementById('datePicker').value = today;
   fetchOrdersByDate(today);
 }
+
 
 
 
