@@ -18,8 +18,8 @@ async function fetchOrdersByDate() {
   console.log("Data enviada:", date);
 
   try {
-    const response = await fetch(`https://jazye5785.c44.integrator.host/clientes?date=${encodeURIComponent(date)}`);
-    if (!response.ok) throw new Error(`Erro ao buscar pedidos: ${response.statusText}`);
+    const response = await fetch(https://jazye5785.c44.integrator.host/clientes?date=${encodeURIComponent(date)});
+    if (!response.ok) throw new Error(Erro ao buscar pedidos: ${response.statusText});
 
     const pedidos = await response.json();
     previousOrders = pedidos;
@@ -46,9 +46,9 @@ function addOrder(pedido) {
   const card = document.createElement("div");
   card.className = "order-card";
 
-  const produtosHtml = pedido.itens.map(item => `
+  const produtosHtml = pedido.itens.map(item => 
     <li>${item.quantidade}x ${item.nome} - R$ ${item.preco}</li>
-  `).join("");
+  ).join("");
 
   const totalCalculado = pedido.itens.reduce((acc, item) => acc + item.preco * item.quantidade, 0);
 
@@ -58,7 +58,7 @@ function addOrder(pedido) {
   });
 
   if (pedido.entrega === "Entrega") {
-    card.innerHTML = `
+    card.innerHTML = 
       <div class="pedido-card">
         <div class="pedido-header">
           <h3>Pedido #${pedido.id}</h3>
@@ -89,9 +89,9 @@ function addOrder(pedido) {
           <p><strong>Total:</strong> R$ ${totalCalculado.toFixed(2)}</p>
         </div>
       </div>
-    `;
+    ;
   } else {
-    card.innerHTML = `
+    card.innerHTML = 
       <div class="pedido-card">
         <div class="pedido-header">
           <h3>Pedido #${pedido.id}</h3>
@@ -110,7 +110,7 @@ function addOrder(pedido) {
           <p><strong>Total:</strong> R$ ${totalCalculado.toFixed(2)}</p>
         </div>
       </div>
-    `;
+    ;
   }
 
   container.appendChild(card);
@@ -120,7 +120,7 @@ function addOrder(pedido) {
 // WEBSOCKET
 // =====================
 function setupWebSocket() {
-  socket = new WebSocket("ws://jazye5785.c44.integrator.host:3000");
+  socket = new WebSocket("wss://jazye5785.c44.integrator.host");
 
   socket.onopen = () => {
     console.log('✅ WebSocket conectado');
@@ -183,7 +183,7 @@ function setInitialDate() {
   const datePicker = document.getElementById('datePicker');
   const savedDate = localStorage.getItem('selectedDate');
   const today = new Date();
-  const defaultDate = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
+  const defaultDate = ${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')};
   datePicker.value = savedDate || defaultDate;
 
   datePicker.addEventListener('change', () => {
@@ -197,4 +197,3 @@ function returnToTodayOrders() {
   document.getElementById('datePicker').value = today;
   fetchOrdersByDate(today);
 }
-
