@@ -162,13 +162,11 @@ function showSystemNotification(titulo, mensagem) {
 // =====================
 function setInitialDate() {
   const datePicker = document.getElementById('datePicker');
-  const savedDate = localStorage.getItem('selectedDate');
   const today = new Date();
   const defaultDate = today.toISOString().split('T')[0];
   datePicker.value = savedDate || defaultDate;
 
   datePicker.addEventListener('change', () => {
-    localStorage.setItem('selectedDate', datePicker.value);
     fetchOrdersByDate();
   });
 }
@@ -178,6 +176,7 @@ function returnToTodayOrders() {
   document.getElementById('datePicker').value = today;
   fetchOrdersByDate(today);
 }
+
 
 
 
