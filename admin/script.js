@@ -1,4 +1,3 @@
-let socket; // conexão global do WebSocket
 let previousOrders = [];
 
 // =====================
@@ -117,39 +116,6 @@ function addOrder(pedido) {
 }
 
 // =====================
-// WEBSOCKET
-// =====================
-function setupWebSocket() {
-  socket = new WebSocket("wss://jazye5785.c44.integrator.host");
-
-  socket.onopen = () => {
-    console.log('✅ WebSocket conectado');
-  };
-
-  socket.onmessage = event => {
-    const pedido = JSON.parse(event.data);
-    const alreadyExists = previousOrders.some(p => p.id === pedido.id);
-
-    if (!alreadyExists) {
-      playNewOrderSound();
-      showNotification('Novo pedido chegou!');
-      showSystemNotification('Administração de Pedidos', 'Você tem um novo pedido!');
-      previousOrders.unshift(pedido);
-      addOrder(pedido);
-    }
-  };
-
-  socket.onerror = error => {
-    console.error('❌ WebSocket erro:', error);
-  };
-
-  socket.onclose = () => {
-    console.warn('⚠️ WebSocket desconectado. Tentando reconectar em 5s...');
-    setTimeout(setupWebSocket, 5000);
-  };
-}
-
-// =====================
 // SOM E NOTIFICAÇÕES
 // =====================
 function playNewOrderSound() {
@@ -197,3 +163,4 @@ function returnToTodayOrders() {
   document.getElementById('datePicker').value = today;
   fetchOrdersByDate(today);
 }
+
