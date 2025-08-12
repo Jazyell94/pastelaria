@@ -120,7 +120,7 @@ function addOrder(pedido) {
 // WEBSOCKET
 // =====================
 function setupWebSocket() {
-  socket = new WebSocket("wss://jazye5785.c44.integrator.host");
+  socket = new WebSocket("ws://jazye5785.c44.integrator.host:3000");
 
   socket.onopen = () => {
     console.log('✅ WebSocket conectado');
@@ -197,3 +197,4 @@ function returnToTodayOrders() {
   document.getElementById('datePicker').value = today;
   fetchOrdersByDate(today);
 }
+
