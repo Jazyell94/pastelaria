@@ -8,17 +8,22 @@ document.addEventListener('DOMContentLoaded', () => {
   if (Notification.permission !== "granted" && Notification.permission !== "denied") {
     Notification.requestPermission();
   }
+
   setInitialDate();
   fetchOrdersByDate();
   startPolling();
 });
 
-
 // =====================
 // FETCH DE PEDIDOS POR DATA
 // =====================
 async function fetchOrdersByDate() {
-  const date = document.getElementById('datePicker').value;
+  let date = document.getElementById('datePicker').value;
+  if (!date) {
+    date = getTodayDate();
+    document.getElementById('datePicker').value = date;
+  }
+
   console.log("Data enviada:", date);
 
   try {
@@ -28,14 +33,17 @@ async function fetchOrdersByDate() {
     const pedidos = await response.json();
 
     if (pedidos.length > 0) {
-            const pedidoMaisRecente = pedidos[0]; // Supondo que o primeiro é o mais novo
+      const pedidoMaisRecente = pedidos[0]; // supondo que já vem ordenado do mais novo
 
-            // Só mostra notificação se for diferente do último visto
-            if (pedidoMaisRecente.id !== ultimoPedidoId) {
-                ultimoPedidoId = pedidoMaisRecente.id;
-                showSystemNotification(pedidoMaisRecente);
-            }
-        }
+      if (pedidoMaisRecente.id !== ultimoPedidoId) {
+        ultimoPedidoId = pedidoMaisRecente.id;
+        showSystemNotification(
+          `Novo Pedido #${pedidoMaisRecente.id}`,
+          `${pedidoMaisRecente.nome} - Total R$ ${pedidoMaisRecente.itens.reduce((acc, item) => acc + item.preco * item.quantidade, 0).toFixed(2)}`
+        );
+        playNewOrderSound();
+      }
+    }
 
     previousOrders = pedidos;
     displayOrders(pedidos);
@@ -48,7 +56,6 @@ async function fetchOrdersByDate() {
 function startPolling() {
   setInterval(fetchOrdersByDate, 5000);
 }
-
 
 // =====================
 // EXIBIR PEDIDOS
@@ -78,61 +85,39 @@ function addOrder(pedido) {
     hour: "2-digit", minute: "2-digit", second: "2-digit",
   });
 
-  if (pedido.entrega === "Entrega") {
-    card.innerHTML = `
-      <div class="pedido-card">
-        <div class="pedido-header">
-          <h3>Pedido #${pedido.id}</h3>
-          <p><strong>${pedido.entrega}</strong></p>
-          <p><strong>Hora:</strong> ${horaFormatada}</p>
-        </div>
-        <div class="pedido-info">
-          <p><strong>Nome:</strong> ${pedido.nome}</p>
-          <p><strong>Telefone:</strong> ${pedido.telefone}</p>
-          <div class="pedido-endereco">
-            <p><strong>Endereço:</strong></p>
-            <span>${pedido.rua?.trim() || ''}, ${pedido.numero?.trim() || ''} - ${pedido.bairro?.trim() || ''}</span>
-          </div>
-          <div class="pedido-ponto">
-            <p><strong>Ponto de referência:</strong></p>
-            <span>${pedido.ponto || ''}</span>
-          </div>
-          <div class="pedido-pagamento">
-            <p><strong>Pagamento:</strong> ${pedido.pagamento}</p>
-            <p><strong>Troco:</strong> R$ ${pedido.troco ?? '0,00'}</p>
-          </div>
-        </div>
-        <div class="pedido-produtos">
-          <p><strong>Produtos:</strong></p>
-          <ul>${produtosHtml}</ul>
-        </div>
-        <div class="valor-total">
-          <p><strong>Total:</strong> R$ ${totalCalculado.toFixed(2)}</p>
-        </div>
+  card.innerHTML = `
+    <div class="pedido-card">
+      <div class="pedido-header">
+        <h3>Pedido #${pedido.id}</h3>
+        <p><strong>${pedido.entrega}</strong></p>
+        <p><strong>Hora:</strong> ${horaFormatada}</p>
       </div>
-    `;
-  } else {
-    card.innerHTML = `
-      <div class="pedido-card">
-        <div class="pedido-header">
-          <h3>Pedido #${pedido.id}</h3>
-          <p><strong>${pedido.entrega}</strong></p>
-          <p><strong>Hora:</strong> ${horaFormatada}</p>
+      <div class="pedido-info">
+        <p><strong>Nome:</strong> ${pedido.nome}</p>
+        <p><strong>Telefone:</strong> ${pedido.telefone}</p>
+        ${pedido.entrega === "Entrega" ? `
+        <div class="pedido-endereco">
+          <p><strong>Endereço:</strong></p>
+          <span>${pedido.rua?.trim() || ''}, ${pedido.numero?.trim() || ''} - ${pedido.bairro?.trim() || ''}</span>
         </div>
-        <div class="pedido-info">
-          <p><strong>Nome:</strong> ${pedido.nome}</p>
-          <p><strong>Telefone:</strong> ${pedido.telefone}</p>
+        <div class="pedido-ponto">
+          <p><strong>Ponto de referência:</strong></p>
+          <span>${pedido.ponto || ''}</span>
         </div>
-        <div class="pedido-produtos">
-          <p><strong>Produtos:</strong></p>
-          <ul>${produtosHtml}</ul>
-        </div>
-        <div class="valor-total">
-          <p><strong>Total:</strong> R$ ${totalCalculado.toFixed(2)}</p>
-        </div>
+        <div class="pedido-pagamento">
+          <p><strong>Pagamento:</strong> ${pedido.pagamento}</p>
+          <p><strong>Troco:</strong> R$ ${pedido.troco ?? '0,00'}</p>
+        </div>` : ''}
       </div>
-    `;
-  }
+      <div class="pedido-produtos">
+        <p><strong>Produtos:</strong></p>
+        <ul>${produtosHtml}</ul>
+      </div>
+      <div class="valor-total">
+        <p><strong>Total:</strong> R$ ${totalCalculado.toFixed(2)}</p>
+      </div>
+    </div>
+  `;
 
   container.appendChild(card);
 }
@@ -142,7 +127,9 @@ function addOrder(pedido) {
 // =====================
 function playNewOrderSound() {
   const audio = new Audio('notificacao.mp3');
-  audio.play();
+  audio.play().catch(() => {
+    console.log("Som não pôde ser reproduzido sem interação do usuário");
+  });
 }
 
 function showSystemNotification(titulo, mensagem) {
@@ -158,30 +145,25 @@ function showSystemNotification(titulo, mensagem) {
 }
 
 // =====================
-// SELECIONAR DATA
+// DATA HOJE E EVENTOS
 // =====================
+function getTodayDate() {
+  return new Date().toISOString().split('T')[0];
+}
+
 function setInitialDate() {
   const datePicker = document.getElementById('datePicker');
-  const today = new Date();
-  const defaultDate = today.toISOString().split('T')[0];
+  const today = getTodayDate();
+  datePicker.value = today;
 
   datePicker.addEventListener('change', () => {
+    ultimoPedidoId = null; // reseta para pegar notificações da nova data
     fetchOrdersByDate();
   });
 }
 
 function returnToTodayOrders() {
-  const today = new Date().toISOString().split('T')[0];
-  document.getElementById('datePicker').value = today;
-  fetchOrdersByDate(today);
+  document.getElementById('datePicker').value = getTodayDate();
+  ultimoPedidoId = null;
+  fetchOrdersByDate();
 }
-
-
-
-
-
-
-
-
-
-
