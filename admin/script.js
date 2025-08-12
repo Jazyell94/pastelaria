@@ -144,13 +144,6 @@ function playNewOrderSound() {
   audio.play();
 }
 
-function showNotification(msg) {
-  const notif = document.getElementById('notificacao');
-  notif.innerText = msg;
-  notif.classList.add('mostrar');
-  setTimeout(() => notif.classList.remove('mostrar'), 4000);
-}
-
 function showSystemNotification(titulo, mensagem) {
   if (Notification.permission === "granted") {
     new Notification(titulo, { body: mensagem });
@@ -184,6 +177,7 @@ function returnToTodayOrders() {
   document.getElementById('datePicker').value = today;
   fetchOrdersByDate(today);
 }
+
 
 
 
