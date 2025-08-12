@@ -6,6 +6,7 @@ let previousOrders = [];
 document.addEventListener('DOMContentLoaded', () => {
   setInitialDate();
   fetchOrdersByDate();
+  startPolling();
 });
 
 // =====================
@@ -26,6 +27,12 @@ async function fetchOrdersByDate() {
     console.error("Erro ao buscar pedidos:", error);
   }
 }
+
+// INICIA O POLLING (a cada 5 segundos)
+function startPolling() {
+  setInterval(fetchOrdersByDate, 5000);
+}
+
 
 // =====================
 // EXIBIR PEDIDOS
@@ -162,5 +169,6 @@ function returnToTodayOrders() {
   document.getElementById('datePicker').value = today;
   fetchOrdersByDate(today);
 }
+
 
 
