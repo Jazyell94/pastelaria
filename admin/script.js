@@ -1,4 +1,5 @@
 let previousOrders = [];
+let ultimoPedidoId = null;
 
 // =====================
 // INICIALIZAÇÃO
@@ -26,14 +27,15 @@ async function fetchOrdersByDate() {
 
     const pedidos = await response.json();
 
-    // Comparar se há pedidos novos
-    const novosPedidos = pedidos.filter(p => !previousOrders.some(old => old.id === p.id));
-    if (novosPedidos.length > 0) {
-      playNewOrderSound();
-      novosPedidos.forEach(p => {
-        showSystemNotification("Novo pedido recebido", `Pedido #${p.id} de ${p.nome}`);
-      });
-    }
+    if (pedidos.length > 0) {
+            const pedidoMaisRecente = pedidos[0]; // Supondo que o primeiro é o mais novo
+
+            // Só mostra notificação se for diferente do último visto
+            if (pedidoMaisRecente.id !== ultimoPedidoId) {
+                ultimoPedidoId = pedidoMaisRecente.id;
+                showSystemNotification(pedidoMaisRecente);
+            }
+        }
 
     previousOrders = pedidos;
     displayOrders(pedidos);
@@ -176,6 +178,7 @@ function returnToTodayOrders() {
   document.getElementById('datePicker').value = today;
   fetchOrdersByDate(today);
 }
+
 
 
 
