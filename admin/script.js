@@ -103,10 +103,10 @@ function addOrder(pedido) {
     <div class="pedido-card">
       <div class="pedido-header">
         <h3>Pedido #${pedido.id}</h3>
-        <p><strong>${pedido.entrega}</strong></p>
         <p><strong>Hora:</strong> ${horaFormatada}</p>
       </div>
       <div class="pedido-info">
+        <p><strong>Pedido para ${pedido.entrega}</strong></p>
         <p><strong>Nome:</strong> ${pedido.nome}</p>
         <p><strong>Telefone:</strong> ${pedido.telefone}</p>
         ${pedido.entrega === "Entrega" ? `
@@ -188,6 +188,7 @@ function returnToTodayOrders() {
   ultimoPedidoId = null;
   fetchOrdersByDate();
 }
+
 
 
 
