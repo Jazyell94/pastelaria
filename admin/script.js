@@ -165,13 +165,16 @@ function getTodayDate() {
 
 function setInitialDate() {
   const datePicker = document.getElementById('datePicker');
-  if (datePicker) {
-    datePicker.value = getTodayDate();
-    datePicker.addEventListener('change', () => {
-      ultimoPedidoId = null;
-      fetchOrdersByDate();
-    });
-  }
+  const savedDate = localStorage.getItem('selectedDate'); // se quiser salvar a data selecionada
+  const today = getTodayDate();
+
+  datePicker.value = savedDate || today;
+
+  datePicker.addEventListener('change', () => {
+    localStorage.setItem('selectedDate', datePicker.value); // salva a escolha
+    ultimoPedidoId = null; // resetar para notificação de novos pedidos
+    fetchOrdersByDate();
+  });
 }
 
 function returnToTodayOrders() {
@@ -179,3 +182,4 @@ function returnToTodayOrders() {
   ultimoPedidoId = null;
   fetchOrdersByDate();
 }
+
