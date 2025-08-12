@@ -113,7 +113,7 @@ function addOrder(pedido) {
         <div class="pedido-endereco">
           <p><strong>Endereço:</strong></p>
           <span>Rua: ${pedido.rua?.trim() || ''}</span>
-          <span>Nº: ${pedido.numero?.trim() || ''},</span>
+          <span>Nº: ${pedido.numero?.trim() || ''}</span>
           <span>Bairro: ${pedido.bairro?.trim() || ''}</span>
           <span>Ponto de referência: ${pedido.ponto || ''}</span>
         </div>
@@ -188,6 +188,7 @@ function returnToTodayOrders() {
   ultimoPedidoId = null;
   fetchOrdersByDate();
 }
+
 
 
 
