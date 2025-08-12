@@ -15,21 +15,24 @@ document.addEventListener('DOMContentLoaded', () => {
     audioLiberado = true;
   }, { once: true });
 
-  setInitialDate();
-  fetchOrdersByDate();
-  startPolling();
+  setInitialDate(() => {
+    fetchOrdersByDate();
+    startPolling();
+  });
 });
 
 // =====================
 // FETCH DE PEDIDOS POR DATA
 // =====================
 async function fetchOrdersByDate() {
-  let datePicker = document.getElementById('datePicker');
-  let date = datePicker?.value || "";
+  const datePicker = document.getElementById('datePicker');
+  const date = datePicker?.value || getTodayDate();
+
+  console.log("Data enviada:", date);
 
   if (!date) {
-    date = getTodayDate();
-    if (datePicker) datePicker.value = date;
+    console.warn("Data inválida, fetch abortado");
+    return;
   }
 
   try {
@@ -163,28 +166,26 @@ function getTodayDate() {
   return new Date().toISOString().split('T')[0];
 }
 
-function setInitialDate() {
+function setInitialDate(callback) {
   const datePicker = document.getElementById('datePicker');
-  const savedDate = localStorage.getItem('selectedDate'); 
+  const savedDate = localStorage.getItem('selectedDate');
   const today = getTodayDate();
 
   datePicker.value = savedDate || today;
 
-  function handleDateChange() {
-    localStorage.setItem('selectedDate', datePicker.value); // salva a data
-    ultimoPedidoId = null; // reset para notificação
+  datePicker.addEventListener('change', () => {
+    localStorage.setItem('selectedDate', datePicker.value);
+    ultimoPedidoId = null;
     fetchOrdersByDate();
-  }
+  });
 
-  datePicker.addEventListener('change', handleDateChange);
-  datePicker.addEventListener('input', handleDateChange);
+  if (callback) callback();
 }
 
-
 function returnToTodayOrders() {
-  document.getElementById('datePicker').value = getTodayDate();
+  const datePicker = document.getElementById('datePicker');
+  datePicker.value = getTodayDate();
+  localStorage.setItem('selectedDate', datePicker.value);
   ultimoPedidoId = null;
   fetchOrdersByDate();
 }
-
-
