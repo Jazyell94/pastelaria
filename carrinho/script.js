@@ -169,9 +169,9 @@ function avancarEtapa(numero) {
   campos.forEach(campo => {
     const idCampo = campo.id || "";
 
-    console.log(formaEntregaSelecionada)
     if (numero === 2) {
         formaEntregaSelecionada = "Entrega";
+       console.log("Forma de entrega definida para:", formaEntregaSelecionada);
     }
     
     // Permitir que o campo de número da casa esteja vazio
@@ -222,6 +222,7 @@ function getDataHoraLocalMySQL() {
 // Quando clicar no botão de retirada:
 document.getElementById("etapa-endereco-loja").addEventListener("click", () => {
   formaEntregaSelecionada = "Retirada";
+  console.log("Forma de entrega definida para:", formaEntregaSelecionada);
 });
 
 
@@ -571,6 +572,7 @@ function mostrarOpcoesPix() {
 
 // === INICIALIZA EXIBIÇÃO DO CARRINHO AO ABRIR PÁGINA ===
 mostrarCarrinho();
+
 
 
 
