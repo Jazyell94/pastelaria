@@ -169,6 +169,11 @@ function avancarEtapa(numero) {
   campos.forEach(campo => {
     const idCampo = campo.id || "";
 
+    console.log(formaEntregaSelecionada)
+    if (numero === 2) {
+        formaEntregaSelecionada = "Entrega";
+    }
+    
     // Permitir que o campo de número da casa esteja vazio
     if (idCampo === "checkout-numero" || idCampo === "checkout-ponto") {
       return; // ignora validação desses campos
@@ -566,6 +571,7 @@ function mostrarOpcoesPix() {
 
 // === INICIALIZA EXIBIÇÃO DO CARRINHO AO ABRIR PÁGINA ===
 mostrarCarrinho();
+
 
 
 
