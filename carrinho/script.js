@@ -55,13 +55,19 @@ function mostrarCarrinho() {
     const subtotal = preco * item.quantidade;
     total += subtotal;
 
+    // ✅ Corrige o caminho da imagem para evitar /carrinho/ no meio
+    let imagemSrc = item.imagem;
+    if (!imagemSrc.startsWith("http") && !imagemSrc.startsWith("/pastelaria/")) {
+      imagemSrc = `/pastelaria/${imagemSrc.replace(/^\/+/, '')}`;
+    }
+
     const container = document.createElement("div");
     container.classList.add("product-container");
 
     container.innerHTML = `
       <div class="content">
         <div class="product-img">
-          <img src="${item.imagem}" alt="${item.nome}">
+          <img src="${imagemSrc}" alt="${item.nome}">
         </div>
         <div class="product-desc">
           <span class="product-name">${item.nome}</span>
@@ -88,7 +94,6 @@ function mostrarCarrinho() {
     btn.addEventListener('click', () => alterarQuantidade(btn.dataset.id, -1));
   });
 }
-
 
 // === FUNÇÃO AUXILIAR: TOTAL DO CARRINHO ===
 function getTotalCarrinho() {
@@ -561,6 +566,7 @@ function mostrarOpcoesPix() {
 
 // === INICIALIZA EXIBIÇÃO DO CARRINHO AO ABRIR PÁGINA ===
 mostrarCarrinho();
+
 
 
 
