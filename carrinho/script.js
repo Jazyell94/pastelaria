@@ -302,6 +302,16 @@ function finalizarPedido() {
       console.error("Erro ao enviar pedido:", err);
       alert("Houve um erro ao enviar o pedido. Tente novamente.");
     });
+    
+    fetch("http://host.docker.internal:5678/webhook/novo-pedido", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.strngfy({telefone: telefone})
+      })
+      .then(res => res.json())
+      .then(data => console.log("Numero enviado:", data));
 }
 
 
