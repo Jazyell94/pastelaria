@@ -315,78 +315,9 @@ function finalizarPedido() {
 }
 
 
-
-
-
-
-
-
-
-
 // === MANIPULAÇÃO DO CAMPO DE TROCO ===
 
-// Função para montar o campo troco (apenas uma vez)
-function montarCampoTroco() {
-  const campo = document.getElementById("campo-troco");
-  campo.innerHTML = `
-    <div  style="margin-top: 8px; font-size: .9rem">
-      <strong>Total:</strong> <span id="valor-total-checkout">R$ 0,00</span>
-    </div>
 
-    <div class="troco-container">
-      <label><strong>Vai precisar de troco?</strong></label><br>
-      <div class="box-select">
-        <input type="radio" name="precisaTroco" value="nao" id="troco-nao" checked>
-        <label for="troco-nao">Não</label>
-      </div>
-      <div class="box-select">
-        <input type="radio" name="precisaTroco" value="sim" id="troco-sim">
-        <label for="troco-sim">Sim</label>
-      </div>
-    </div>
-
-    <div id="wrapper-troco-valor" style="display:none;">
-      <input type="text" id="input-troco" placeholder="Troco pra quanto?" />
-      <div id="resultado-troco" style="margin-top:4px; font-size:0.9em;"></div>
-    </div>
-  `;
-
-  // Listeners para os rádios de troco
-  document.getElementById("troco-sim").addEventListener("change", () => {
-    const wrapper = document.getElementById("wrapper-troco-valor");
-    wrapper.style.display = "flex";
-    wrapper.style.alignItems = "center";
-    wrapper.style.justifyContent = "space-between";
-    atualizarTotalETroco();
-  });
-  document.getElementById("troco-nao").addEventListener("change", () => {
-    const wrapper = document.getElementById("wrapper-troco-valor");
-    wrapper.style.display = "none";
-    document.getElementById("input-troco").value = "";
-    document.getElementById("resultado-troco").textContent = "";
-  });
-
-  // Listener para formatação e atualização ao digitar valor do troco
-  const inputTroco = document.getElementById("input-troco");
-
-  inputTroco.addEventListener("input", (e) => {
-    let valor = e.target.value.replace(/\D/g, ""); // Remove tudo que não for dígito
-    if (valor.length === 0) valor = "0";
-
-    // Limita valor muito grande (ex: 99999999)
-    if (valor.length > 8) valor = valor.slice(0, 8);
-
-    // Formata como reais (centavos no final)
-    valor = (parseInt(valor, 10) / 100).toFixed(2) + "";
-
-    // Converte para formato brasileiro (vírgula)
-    valor = valor.replace(".", ",");
-
-    e.target.value = "R$ " + valor;
-
-    atualizarTotalETroco();
-  });
-}
 
 // Atualiza exibição do total e calcula o troco / falta
 function atualizarTotalETroco() {
@@ -412,37 +343,6 @@ function atualizarTotalETroco() {
   } else if (resultado) {
     resultado.textContent = "";
   }
-}
-
-// === EXIBIÇÃO DO CAMPO TROCO CONFORME FORMA DE PAGAMENTO ===
-function verificarTroco() {
-  const pagamento = document.getElementById("checkout-pagamento").value;
-  const campoTroco = document.getElementById("campo-troco");
-  const campoPix = document.getElementById("campo-pix");
-
-  if (!campoTroco || !campoPix) {
-    console.warn("Elemento #campo-troco ou #campo-pix não encontrado no DOM");
-    return;
-  }
-
-  if (pagamento === "Dinheiro") {
-    if (!campoTroco.dataset.init) {
-      montarCampoTroco();
-      campoTroco.dataset.init = "1";
-    }
-    atualizarTotalETroco();
-    campoTroco.style.display = "block";
-    campoPix.innerHTML = "";  // limpa pix se tinha algo
-  } else {
-    campoTroco.style.display = "none";
-
-    if (pagamento === "Pix") {
-      mostrarOpcoesPix();
-    } else {
-      campoPix.innerHTML = "";
-    }
-  } 
-
 }
 
 // === MÁSCARA PARA TELEFONE NO CHECKOUT ===
