@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap');
 
 :root {
     --primary-color: #7A4A23;
@@ -34,27 +35,6 @@ body {
     padding: 1rem;
     background-color: #f6f6f6;
 }
-.header .endereco {
-    text-align: center;
-    font-size: 1rem;
-}
-.header .endereco h1 {
-    font-size: 1rem;
-    font-weight: 600;
-    color: 	#F3753A;
-}
-.header .endereco p {
-    font-family: "Inter", sans-serif;
-    font-weight: 700;
-    color: #4A2E2B;
-}
-.header .endereco span {
-    margin-right: 5px;
-}
-.header .endereco span i {
-    font-size: 1.1rem;
-    color: #4A2E2B;
-}
 .header .logo {
     display: flex;
     align-items: center;
@@ -69,18 +49,22 @@ body {
     font-size: 1.1rem;
     color: #F3753A;
 }
-.header .carrinho i {
-    font-size: 1.6rem;
-    color: #ccc;
-}
 .header .logo img {
     width: 3rem;
     height: 3rem;
     border-radius: 50%;
     object-fit: cover;
 }
-
-
+.header h3 {
+    font-family: "Caveat", cursive;
+    font-size: 2rem;
+    font-weight: 600;
+    color: #4f4f4f;
+}
+.header .carrinho i {
+    font-size: 1.6rem;
+    color: #ccc;
+}
 /* header styles end */
 
 /* img-home-top styles start */
@@ -111,7 +95,7 @@ body {
 
 /* search-buttom-home styles start */
 .search-button-home {
-    margin-top: 6rem;
+    margin-top: 7rem;
     margin-bottom: 2rem;
     padding: 0 1rem;
 }
