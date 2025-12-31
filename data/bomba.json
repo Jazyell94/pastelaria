@@ -1,14 +1,14 @@
 [
   {
-    "name": "Bomba de Chocolate",
+    "name": "Bomba de carne",
     "price": "5,00",
-    "image": "assets/image/bomba.png",
+    "image": "assets/images/bomba/bombaCarne.png",
     "id": "bombaChocolate"
   },
   {
-    "name": "Bomba de Creme",
+    "name": "Bomba de presunto",
     "price": "5,00",
-    "image": "assets/image/bomba.png",
+    "image": "assets/images/bomba/bombaPresunto.png",
     "id": "bombaCreme"
   }
 ]

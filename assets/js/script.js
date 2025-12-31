@@ -1,5 +1,5 @@
 // Lista de categorias conforme o HTML
-const categorias = ['pasteis', 'pasteisEspeciais', 'pasteisDoce', 'bebidas', 'combos'];
+const categorias = ['combos', 'pastel', 'bomba', 'coxinha', 'bebidas'];
 
 // Carrega todas as categorias ao iniciar
 function carregarCategorias() {
@@ -100,8 +100,8 @@ window.addEventListener('DOMContentLoaded', carregarCategorias);
 
 
 // Ativa a primeira categoria ao iniciar
-document.querySelector('.box[data-category="pasteis"]')?.classList.add('active');
-document.getElementById('pasteis-content')?.classList.remove('hidden');
+document.querySelector('.box[data-category="combos"]')?.classList.add('active');
+document.getElementById('combos-content')?.classList.remove('hidden');
 
 // Carrinho
 function getCarrinho() {

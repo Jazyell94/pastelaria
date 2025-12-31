@@ -284,7 +284,7 @@ function finalizarPedido() {
   };
 
   console.log("dados", pedido);
-  fetch("https://jazye5785.c44.integrator.host/api/pedidos", {
+  fetch("http://localhost:3000/api/pedidos", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(pedido),
@@ -409,16 +409,6 @@ function atualizarTotalETroco() {
 
     const valorRecebido = parseFloat(valorRecebidoRaw);
 
-    if (!isNaN(valorRecebido)) {
-      const troco = valorRecebido - total;
-      if (troco < 0) {
-        resultado.textContent = `Faltam R$ ${Math.abs(troco).toFixed(2).replace(".", ",")}`;
-      } else {
-        resultado.textContent = `Troco: R$ ${troco.toFixed(2).replace(".", ",")}`;
-      }
-    } else {
-      resultado.textContent = "";
-    }
   } else if (resultado) {
     resultado.textContent = "";
   }

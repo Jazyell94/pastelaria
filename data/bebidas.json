@@ -1,14 +1,8 @@
 [
   {
-    "name": "Coca-cola 1L",
+    "name": "Coca-cola 250ml",
     "price": "5,00",
-    "image": "assets/image/bomba.png",
+    "image": "assets/images/bebidas/coca250ml.jpg",
     "id": "bombaChocolate"
-  },
-  {
-    "name": "Guaraná lata",
-    "price": "5,00",
-    "image": "assets/image/bomba.png",
-    "id": "bombaCreme"
   }
 ]

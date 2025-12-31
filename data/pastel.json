@@ -1,32 +1,20 @@
 [
   {
-    "name": "Pastel de Queijo",
-    "price": "10,00",
-    "image": "assets/image/pastel3.png",
-    "id": "pastel3"
-  },
-  {
-    "name": "Pastel de Frango",
-    "price": "4,00",
-    "image": "assets/image/pastel.png",
-    "id": "pastelFrango"
-  },
-  {
-    "name": "Pastel de F. catupiry",
-    "price": "4,50",
-    "image": "assets/image/pastel.png",
-    "id": "pastelFrangoCatupiry"
-  },
-  {
-    "name": "Pastel de Queijo",
-    "price": "4,50",
-    "image": "assets/image/pastel.png",
-    "id": "pastelQueijo"
-  },
-  {
-    "name": "Pastel de Carne",
-    "price": "4,00",
-    "image": "assets/image/pastel.png",
+    "name": "Pastel de carne",
+    "price": "5,00",
+    "image": "assets/images/pastel/pastelCarne.png",
     "id": "pastelCarne"
+  },
+  {
+    "name": "Pastel de queijo",
+    "price": "5,00",
+    "image": "assets/images/pastel/pastelQueijo.png",
+    "id": "pastelPresuntoeQueijo"
+  },
+  {
+    "name": "Pastel de presu. e queijo",
+    "price": "5,00",
+    "image": "assets/images/pastel/pastelPresuntoeQueijo.png",
+    "id": "pastelPresuntoeQueijo"
   }
 ]

@@ -1,14 +1,20 @@
 [
   {
-    "name": "Bomba de Chocolate",
-    "price": "5,00",
-    "image": "assets/image/bomba.png",
-    "id": "bombaChocolate"
+    "name": "Combo 3 salgados",
+    "price": "10,00",
+    "image": "assets/images/combos/3salgados.png",
+    "id": "pastel3"
   },
   {
-    "name": "Bomba de Creme",
-    "price": "5,00",
-    "image": "assets/image/bomba.png",
-    "id": "bombaCreme"
+    "name": "Porção mini salgados",
+    "price": "10,00",
+    "image": "assets/images/combos/miniSalgados.png",
+    "id": "pastelFrango"
+  },
+  {
+    "name": "Porção batatinha",
+    "price": "4,50",
+    "image": "assets/images/combos/batataFrita.png",
+    "id": "pastelFrangoCatupiry"
   }
 ]
