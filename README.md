@@ -1,3 +1,1 @@
-https://jazyell94.github.io/sabordacasa/
-
-https://jazyell94.github.io/sabordacasa/admin/admin.html
+https://jazyell94.github.io/pastelaria/

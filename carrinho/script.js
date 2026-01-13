@@ -460,15 +460,9 @@ function mostrarOpcoesPix() {
   });
 }
 
-
-
-
-
-
-
-
 // === INICIALIZA EXIBIÇÃO DO CARRINHO AO ABRIR PÁGINA ===
 mostrarCarrinho();
+
 
 
 

@@ -249,9 +249,3 @@ function confirmarPedidoWhatsapp(pedido) {
 
   window.open(url, "_blank");
 }
-
-
-
-
-
-
