@@ -16,7 +16,9 @@ html {
 body {
     font-family: "Poppins", sans-serif;
     background-color: #f6f6f6;
+    
     height: 100dvh;
+    border: 1px solid red;
 }
 
 .logo {
@@ -80,5 +82,4 @@ body {
     width: 40px;
     height: auto;
     cursor: pointer;
-
 }

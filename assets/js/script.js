@@ -19,7 +19,7 @@ function verificaHorarioDeFuncionamento() {
   const horarios = {
     domingo:  { abertura: [8, 0], fechamento: [22, 0] },
     segunda:  { abertura: [8, 0], fechamento: [22, 0] },
-    terca:    { abertura: [8, 0], fechamento: [22, 0] },
+    terca:    { abertura: [0, 0], fechamento: [0, 9] },
     quarta:   { abertura: [8, 0], fechamento: [22, 0] },
     quinta:   { abertura: [8, 0], fechamento: [22, 0] },
     sexta:    { abertura: [8, 0], fechamento: [18, 0] },
@@ -39,19 +39,19 @@ function verificaHorarioDeFuncionamento() {
 
   const estaNaPaginaFechada = window.location.pathname.includes('/fechado/');
 
-  const BASE_PATH = `/${window.location.pathname.split('/')[1]}`;
-
   if (foraDoHorario && !estaNaPaginaFechada) {
-    window.location.href = `${BASE_PATH}/fechado/index.html`;
+    window.location.href = '../fechado/index.html';
   }
 
   if (!foraDoHorario && estaNaPaginaFechada) {
-    window.location.href = `${BASE_PATH}/index.html`;
+    window.location.href = '../index.html';
   }
 }
 
 setInterval(verificaHorarioDeFuncionamento, 60000);
 verificaHorarioDeFuncionamento();
+
+
 
 // Lista de categorias conforme o HTML
 const categorias = ['combos', 'pastel', 'bomba', 'coxinha', 'bebidas'];
@@ -338,6 +338,3 @@ function digitarPlaceholder() {
 
 // Inicia a animação após o carregamento da página
 window.addEventListener('DOMContentLoaded', digitarPlaceholder);
-
-
-
