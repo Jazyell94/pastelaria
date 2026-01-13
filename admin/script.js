@@ -36,7 +36,7 @@ async function fetchOrdersByDate() {
   }
 
   try {
-    const response = await fetch(`http://localhost:3000/clientes?date=${encodeURIComponent(date)}`);
+    const response = await fetch(`https://sabor6999.c44.integrator.host/clientes?date=${encodeURIComponent(date)}`);
     if (!response.ok) throw new Error(`Erro ao buscar pedidos: ${response.statusText}`);
 
     const pedidos = await response.json();
@@ -249,6 +249,7 @@ function confirmarPedidoWhatsapp(pedido) {
 
   window.open(url, "_blank");
 }
+
 
 
 
