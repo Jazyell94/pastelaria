@@ -37,7 +37,7 @@ function verificaHorarioDeFuncionamento() {
     horaAtual > horaFechamento ||
     (horaAtual === horaFechamento && minutoAtual >= minutoFechamento);
 
-  const estaNaPaginaFechada = window.location.pathname.includes('/fechado/');
+  const estaNaPaginaFechada = window.location.pathname.includes('sabordacasa/fechado/');
 
   if (foraDoHorario && !estaNaPaginaFechada) {
     window.location.href = '../fechado/index.html';
@@ -338,4 +338,5 @@ function digitarPlaceholder() {
 
 // Inicia a animação após o carregamento da página
 window.addEventListener('DOMContentLoaded', digitarPlaceholder);
+
 
