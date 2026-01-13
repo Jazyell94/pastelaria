@@ -37,21 +37,21 @@ function verificaHorarioDeFuncionamento() {
     horaAtual > horaFechamento ||
     (horaAtual === horaFechamento && minutoAtual >= minutoFechamento);
 
-  const estaNaPaginaFechada = window.location.pathname.includes('sabordacasa/fechado/');
+  const estaNaPaginaFechada = window.location.pathname.includes('/fechado/');
+
+  const BASE_PATH = `/${window.location.pathname.split('/')[1]}`;
 
   if (foraDoHorario && !estaNaPaginaFechada) {
-    window.location.href = '../fechado/index.html';
+    window.location.href = `${BASE_PATH}/fechado/index.html`;
   }
 
   if (!foraDoHorario && estaNaPaginaFechada) {
-    window.location.href = '../index.html';
+    window.location.href = `${BASE_PATH}/index.html`;
   }
 }
 
 setInterval(verificaHorarioDeFuncionamento, 60000);
 verificaHorarioDeFuncionamento();
-
-
 
 // Lista de categorias conforme o HTML
 const categorias = ['combos', 'pastel', 'bomba', 'coxinha', 'bebidas'];
@@ -338,5 +338,6 @@ function digitarPlaceholder() {
 
 // Inicia a animação após o carregamento da página
 window.addEventListener('DOMContentLoaded', digitarPlaceholder);
+
 
 
