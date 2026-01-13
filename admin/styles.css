@@ -11,8 +11,7 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f8f9fa;
     min-height: 100vh;
-
-        font-family: "Poppins", sans-serif;
+    font-family: "Poppins", sans-serif;
 }
 
 header {
@@ -111,4 +110,17 @@ header .orders-search-date button {
     align-items: center;
     justify-content: space-between;
     margin-top: 2rem;
+}
+
+.whatsapp-button {
+    margin-top: 1rem;
+    width: 100%;
+    padding: 10px;
+    background-color: #25D366;
+    color: #000;
+    font-weight: 550;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
 }

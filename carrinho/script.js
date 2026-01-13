@@ -228,6 +228,7 @@ document.getElementById("etapa-endereco-loja").addEventListener("click", () => {
 
 
 // === FUNÇÃO PRINCIPAL: FINALIZAR PEDIDO E ENVIAR AO BACK-END ===
+// === FUNÇÃO PRINCIPAL: FINALIZAR PEDIDO E ENVIAR AO BACK-END ===
 function finalizarPedido() {
 
   let nome = "";
@@ -241,7 +242,7 @@ function finalizarPedido() {
     telefone = document.getElementById("telefone-entrega")?.value.trim() || "";
   }
 
-  // Endereço (válido apenas para entrega)
+  // Endereço (somente para entrega)
   const rua = document.getElementById("checkout-rua")?.value.trim() || "";
   const numero = document.getElementById("checkout-numero")?.value.trim() || "";
   const bairro = document.getElementById("checkout-bairro")?.value.trim() || "";
@@ -258,7 +259,9 @@ function finalizarPedido() {
 
   let troco = null;
   if (pagamento === "Dinheiro") {
-    const precisaTroco = document.querySelector('input[name="precisaTroco"]:checked')?.value === "sim";
+    const precisaTroco =
+      document.querySelector('input[name="precisaTroco"]:checked')?.value === "sim";
+
     if (precisaTroco) {
       const recebidoRaw = document.getElementById("input-troco")?.value || "";
       const recebido = parseValorReal(recebidoRaw);
@@ -283,7 +286,8 @@ function finalizarPedido() {
     total: getTotalCarrinho(),
   };
 
-  console.log("dados", pedido);
+  console.log("Pedido enviado:", pedido);
+
   fetch("http://localhost:3000/api/pedidos", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -293,26 +297,19 @@ function finalizarPedido() {
       if (!res.ok) throw new Error(`Erro ao enviar pedido: ${res.status}`);
       return res.json();
     })
-    .then(data => {
+    .then(() => {
       alert("Pedido enviado com sucesso!");
       localStorage.removeItem("carrinho");
+
+      // ✅ REDIRECIONAMENTO FINAL
       window.location.href = "../finalizado/finalizado.html";
     })
     .catch(err => {
       console.error("Erro ao enviar pedido:", err);
       alert("Houve um erro ao enviar o pedido. Tente novamente.");
     });
-    
-    fetch("http://host.docker.internal:5678/webhook/novo-pedido", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.strngfy({telefone: telefone})
-      })
-      .then(res => res.json())
-      .then(data => console.log("Numero enviado:", data));
 }
+
 
 
 // === MANIPULAÇÃO DO CAMPO DE TROCO ===

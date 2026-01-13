@@ -36,7 +36,7 @@ async function fetchOrdersByDate() {
   }
 
   try {
-    const response = await fetch(`https://jazye5785.c44.integrator.host/clientes?date=${encodeURIComponent(date)}`);
+    const response = await fetch(`http://localhost:3000/clientes?date=${encodeURIComponent(date)}`);
     if (!response.ok) throw new Error(`Erro ao buscar pedidos: ${response.statusText}`);
 
     const pedidos = await response.json();
@@ -129,6 +129,10 @@ function addOrder(pedido) {
       <div class="valor-total">
         <p><strong>Total:</strong> R$ ${totalCalculado.toFixed(2)}</p>
       </div>
+      <button class="whatsapp-button" onclick='confirmarPedidoWhatsapp(${JSON.stringify(pedido)})'>
+        Confirmar Pedido via WhatsApp
+      </button>
+
     </div>
   `;
 
@@ -187,6 +191,63 @@ function returnToTodayOrders() {
   localStorage.setItem('selectedDate', datePicker.value);
   ultimoPedidoId = null;
   fetchOrdersByDate();
+}
+
+
+// =====================
+// CONFIRMAR PEDIDO VIA WHATSAPP
+// =====================
+function confirmarPedidoWhatsapp(pedido) {
+
+  // Remove tudo que não for número
+  function limparTelefone(telefone) {
+    return telefone.replace(/\D/g, "");
+  }
+
+  let mensagem = `🔔 *Confirmação de Pedido*\n\n`;
+
+  mensagem += `Cliente: ${pedido.nome}\n\n`;
+
+  if (pedido.entrega === "Entrega") {
+    mensagem += `Endereço: ${pedido.rua}, ${pedido.numero}\n`;
+    mensagem += `Bairro: ${pedido.bairro}\n`;
+    mensagem += `Ponto de Referencia: ${pedido.ponto}\n`;
+    mensagem += `\n`;
+  }
+
+  mensagem += `Itens\n`;
+
+  pedido.itens.forEach(item => {
+    mensagem += `${item.quantidade}x ${item.nome}\n`;
+  });
+
+  const valorItens = pedido.itens.reduce(
+    (acc, item) => acc + item.preco * item.quantidade,
+    0
+  );
+
+  mensagem += `\nValor dos Itens: ${valorItens.toFixed(2).replace(".", ",")}\n`;
+
+  // Se tiver taxa de entrega, ajuste aqui
+  const valorEntrega = pedido.entrega === "Entrega" ? (pedido.valorEntrega || 2) : 0;
+  mensagem += `Valor da Entrega: ${valorEntrega.toFixed(2).replace(".", ",")}\n`;
+
+  const valorTotal = valorItens + valorEntrega;
+  mensagem += `Valor Total: ${valorTotal.toFixed(2).replace(".", ",")}\n\n`;
+
+  mensagem += `Tipo Entrega: ${pedido.entrega === "Entrega" ? "Entregar no endereço" : "Retirada no local"}\n\n`;
+
+  mensagem += `Forma de Pagamento: ${pedido.pagamento}`;
+
+  // Telefone do cliente
+  let telefoneLimpo = limparTelefone(pedido.telefone);
+  if (!telefoneLimpo.startsWith("55")) {
+    telefoneLimpo = "55" + telefoneLimpo;
+  }
+
+  const url = `https://api.whatsapp.com/send?phone=${telefoneLimpo}&text=${encodeURIComponent(mensagem)}`;
+
+  window.open(url, "_blank");
 }
 
 
