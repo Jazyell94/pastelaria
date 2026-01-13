@@ -19,7 +19,7 @@ function verificaHorarioDeFuncionamento() {
   const horarios = {
     domingo:  { abertura: [8, 0], fechamento: [22, 0] },
     segunda:  { abertura: [8, 0], fechamento: [22, 0] },
-    terca:    { abertura: [0, 0], fechamento: [1, 9] },
+    terca:    { abertura: [8, 0], fechamento: [22, 0] },
     quarta:   { abertura: [8, 0], fechamento: [22, 0] },
     quinta:   { abertura: [8, 0], fechamento: [22, 0] },
     sexta:    { abertura: [8, 0], fechamento: [18, 0] },
@@ -338,3 +338,4 @@ function digitarPlaceholder() {
 
 // Inicia a animação após o carregamento da página
 window.addEventListener('DOMContentLoaded', digitarPlaceholder);
+
