@@ -27,7 +27,22 @@ header {
 }
 header h1 {
     font-size: 1.3rem;
+    
+}
+header .title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
     padding: 2rem;
+}
+header .title button {
+    font-size: 1.5rem;
+    border: none;
+    cursor: pointer;
+    padding: .2rem;
+    border-radius: 10px;
+    background-color: #fff;
 }
 header .orders-search-date {  
     padding: .8rem;
