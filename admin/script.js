@@ -1,6 +1,7 @@
 let previousOrders = [];
 let ultimoPedidoId = null;
 let audioLiberado = false;
+let audio = null;
 
 // =====================
 // INICIALIZAÇÃO
@@ -142,25 +143,60 @@ function addOrder(pedido) {
 // =====================
 // SOM E NOTIFICAÇÕES
 // =====================
+
+
+/* =========================
+   ATIVA SOM + NOTIFICAÇÃO
+========================= */
+document.getElementById("ativarNotificacoes").addEventListener("click", async () => {
+  try {
+    // 🔔 Permissão de notificação
+    if ("Notification" in window && Notification.permission !== "granted") {
+      await Notification.requestPermission();
+    }
+
+    // 🎧 Liberação de áudio
+    audio = new Audio("notificacao.mp3");
+    await audio.play();
+    audio.pause();
+    audio.currentTime = 0;
+    audioLiberado = true;
+
+    console.log("✅ Notificações e som ativados");
+    alert("Notificações ativadas com sucesso 🔔");
+
+  } catch (err) {
+    console.error("Erro ao ativar notificações:", err);
+    alert("Não foi possível ativar o som/notificação");
+  }
+});
+
+/* =========================
+   TOCAR SOM DE NOVO PEDIDO
+========================= */
 function playNewOrderSound() {
-  if (!audioLiberado) return; // No iPhone, só toca depois de interação
-  const audio = new Audio('notificacao.mp3');
-  audio.play().catch(() => {
-    console.log("Som não pôde ser reproduzido sem interação do usuário");
+  if (!audioLiberado || !audio) return;
+
+  audio.currentTime = 0;
+  audio.play().catch(err => {
+    console.log("Som bloqueado:", err);
   });
 }
 
+/* =========================
+   NOTIFICAÇÃO DO SISTEMA
+========================= */
 function showSystemNotification(titulo, mensagem) {
-  if (Notification.permission === "granted") {
-    new Notification(titulo, { body: mensagem });
-  } else if (Notification.permission !== "denied") {
-    Notification.requestPermission().then(permission => {
-      if (permission === "granted") {
-        new Notification(titulo, { body: mensagem });
-      }
-    });
-  }
+  if (!("Notification" in window)) return;
+  if (Notification.permission !== "granted") return;
+
+  new Notification(titulo, {
+    body: mensagem,
+    icon: "icon.png", // opcional
+    silent: false
+  });
 }
+
 
 // =====================
 // DATA HOJE E EVENTOS
