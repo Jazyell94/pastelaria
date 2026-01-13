@@ -288,7 +288,7 @@ function finalizarPedido() {
 
   console.log("Pedido enviado:", pedido);
 
-  fetch("http://localhost:3000/api/pedidos", {
+  fetch("https://sabor6999.c44.integrator.host/api/pedidos", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(pedido),
@@ -469,6 +469,7 @@ function mostrarOpcoesPix() {
 
 // === INICIALIZA EXIBIÇÃO DO CARRINHO AO ABRIR PÁGINA ===
 mostrarCarrinho();
+
 
 
 
